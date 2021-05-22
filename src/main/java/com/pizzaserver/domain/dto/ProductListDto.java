@@ -1,6 +1,6 @@
-package com.example.pizzaserver.domain.dto;
+package com.pizzaserver.domain.dto;
 
-import com.example.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.entity.Product;
 
 import java.util.ArrayList;
 

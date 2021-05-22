@@ -1,7 +1,7 @@
-package com.example.pizzaserver.domain.mapper;
+package com.pizzaserver.domain.mapper;
 
-import com.example.pizzaserver.domain.dto.ProductListDto;
-import com.example.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.dto.ProductListDto;
+import com.pizzaserver.domain.entity.Product;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

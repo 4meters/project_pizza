@@ -1,4 +1,4 @@
-package com.example.pizzaserver.domain.entity;
+package com.pizzaserver.domain.entity;
 
 public class Product {
     private String id, type, name, description;

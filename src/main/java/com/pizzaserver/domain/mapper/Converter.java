@@ -1,4 +1,4 @@
-package com.example.pizzaserver.domain.mapper;
+package com.pizzaserver.domain.mapper;
 
 @FunctionalInterface
 public interface Converter<T, F> {

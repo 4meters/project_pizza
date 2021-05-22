@@ -1,10 +1,10 @@
-package com.example.pizzaserver.service.impl;
+package com.pizzaserver.service.impl;
 
-import com.example.pizzaserver.domain.dto.ProductListDto;
-import com.example.pizzaserver.domain.entity.Product;
-import com.example.pizzaserver.domain.mapper.Converter;
-import com.example.pizzaserver.domain.repository.ProductListRepository;
-import com.example.pizzaserver.service.ProductListService;
+import com.pizzaserver.domain.dto.ProductListDto;
+import com.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.mapper.Converter;
+import com.pizzaserver.domain.repository.ProductListRepository;
+import com.pizzaserver.service.ProductListService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

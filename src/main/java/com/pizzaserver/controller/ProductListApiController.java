@@ -1,7 +1,7 @@
-package com.example.pizzaserver.controller;
+package com.pizzaserver.controller;
 
-import com.example.pizzaserver.domain.dto.ProductListDto;
-import com.example.pizzaserver.service.ProductListService;
+import com.pizzaserver.domain.dto.ProductListDto;
+import com.pizzaserver.service.ProductListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

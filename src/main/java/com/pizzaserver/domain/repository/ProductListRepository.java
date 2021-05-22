@@ -1,6 +1,6 @@
-package com.example.pizzaserver.domain.repository;
+package com.pizzaserver.domain.repository;
 
-import com.example.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 @Repository
 public class ProductListRepository {
-    private ArrayList<Product> productList;
 
     public ProductListRepository() {
     }
