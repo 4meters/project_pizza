@@ -22,6 +22,8 @@ public class CheckoutDiscountCalculate {
 
     public CheckoutDiscountCalculate(ArrayList<OrderListProduct> orderListSplitted, double totalCost) {
         this.totalCost=totalCost;
+        this.orderListSplitted=orderListSplitted;
+
         discountHPlist=new ArrayList<>();
         productList=new ProductListRepository().getProductList();
         discountCheck();

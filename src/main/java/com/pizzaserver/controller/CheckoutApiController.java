@@ -3,6 +3,7 @@ package com.pizzaserver.controller;
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
 import com.pizzaserver.domain.dto.CheckoutDto;
 import com.pizzaserver.service.CheckoutService;
+import com.pizzaserver.service.impl.CheckoutServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,8 @@ public class CheckoutApiController {
         LOGGER.info("### Method orderCheckout!");
         LOGGER.info("### orderList: {}",
                 checkoutDto.getOrderList());
-        final CheckoutCalculatedDto checkoutCalculatedDto=checkoutService.getCartTotalCost(checkoutDto.getOrderList());
+        checkoutService=new CheckoutServiceImpl();
+        CheckoutCalculatedDto checkoutCalculatedDto=checkoutService.getCartTotalCost(checkoutDto.getOrderList());
 
         return new ResponseEntity<>(checkoutCalculatedDto, HttpStatus.OK);
     }

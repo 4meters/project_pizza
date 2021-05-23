@@ -58,6 +58,7 @@ public class CheckoutCalculate {
     }
 
     public CheckoutCalculatedDto getCheckoutCalculatedDto() {
+        checkoutCount();
         return checkoutCalculatedDto;
     }
 }
