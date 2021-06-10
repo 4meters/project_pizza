@@ -2,6 +2,7 @@ package com.pizzaserver.domain.dto;
 
 public class CheckoutDto {
     private String orderList;
+    //TODO add token
 
     public CheckoutDto(){
     }

@@ -1,6 +1,6 @@
 package com.pizzaserver.domain.repository;
 
-import com.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.object.Product;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;

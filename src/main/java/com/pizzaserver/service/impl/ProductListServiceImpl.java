@@ -1,7 +1,7 @@
 package com.pizzaserver.service.impl;
 
 import com.pizzaserver.domain.dto.ProductListDto;
-import com.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.object.Product;
 import com.pizzaserver.domain.mapper.Converter;
 import com.pizzaserver.domain.repository.ProductListRepository;
 import com.pizzaserver.service.ProductListService;

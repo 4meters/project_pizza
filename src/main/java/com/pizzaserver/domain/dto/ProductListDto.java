@@ -1,6 +1,6 @@
 package com.pizzaserver.domain.dto;
 
-import com.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.object.Product;
 
 import java.util.ArrayList;
 

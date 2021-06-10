@@ -18,13 +18,13 @@ public class CheckoutApiController {
     private CheckoutService checkoutService;
     private final Logger LOGGER= LoggerFactory.getLogger(CheckoutApiController.class);
 
-    @RequestMapping(value="/checkout", method= RequestMethod.POST)
+    @PostMapping(value="/checkout")
     public ResponseEntity<CheckoutCalculatedDto> orderCheckout(@RequestBody CheckoutDto checkoutDto){
         LOGGER.info("### Method orderCheckout!");
         LOGGER.info("### orderList: {}",
                 checkoutDto.getOrderList());
         checkoutService=new CheckoutServiceImpl();
-        CheckoutCalculatedDto checkoutCalculatedDto=checkoutService.getCartTotalCost(checkoutDto.getOrderList());
+        CheckoutCalculatedDto checkoutCalculatedDto=checkoutService.getCartTotalCost(checkoutDto);
 
         return new ResponseEntity<>(checkoutCalculatedDto, HttpStatus.OK);
     }

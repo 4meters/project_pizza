@@ -1,5 +1,8 @@
 package com.pizzaserver.domain.object;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Product {
     private String id, type, name, description;
     private String costS, costM, costL, costU;
@@ -48,5 +51,14 @@ public class Product {
 
     public String getCostU() {
         return costU;
+    }
+
+    public String getCostBySize(String size){
+        Map<String, String> map = new HashMap<>();
+        map.put("S",costS);
+        map.put("M",costM);
+        map.put("L",costL);
+        map.put("U",costU);
+        return map.get(size).replace(',','.');
     }
 }

@@ -1,7 +1,7 @@
 package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
-import com.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.object.Product;
 import com.pizzaserver.domain.repository.ProductListRepository;
 
 import java.util.ArrayList;
@@ -44,10 +44,7 @@ public class CheckoutDiscountCalculate {
                                 if (!discountHalfPrice) {
                                     if(orderListProduct.getOrderCount().equals("1")) {
 
-                                        if (pizzaCount == 0) {
-                                            discountHPlist.add(orderListProduct);
-                                            pizzaCount++;
-                                        } else if (pizzaCount == 1) {
+                                        if (pizzaCount == 0 || pizzaCount ==1) {
                                             discountHPlist.add(orderListProduct);
                                             pizzaCount++;
                                         }

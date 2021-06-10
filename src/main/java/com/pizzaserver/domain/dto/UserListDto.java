@@ -1,19 +1,21 @@
 package com.pizzaserver.domain.dto;
 
-public class UserLoginDto {
-    private String login;
-    private String password; //sha-1 hash
+import com.pizzaserver.domain.entity.User;
 
-    public UserLoginDto(String login, String password) {
-        this.login = login;
-        this.password = password;
+import java.util.List;
+
+public class UserListDto {
+    private List<User> userList;
+
+    public UserListDto(List<User> userList) {
+        this.userList = userList;
     }
 
-    public String getLogin() {
-        return login;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public String getPassword() {
-        return password;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }
