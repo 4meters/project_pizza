@@ -22,5 +22,6 @@ public interface UserService {
     UserLoginSuccessDto loginUser(UserLoginDto userLoginDto);
 
     boolean checkTokenUser(String token);
+    boolean checkTokenAdmin(String token);
 
 }

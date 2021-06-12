@@ -48,11 +48,6 @@ public class UserServiceImpl implements UserService {
                     .password(userRegisterDto.getPassword())
                     .token(null)
                     .build();
-
-
-            //User user1=new User(userRegisterDto.getLogin(),userRegisterDto.getPassword(), TokenGenerator.generateNewToken());
-            //User user1=new User.Builder().login("test1").password("test2").token("test3").build();
-            //LOGGER.info("User to register2: {} {}", user1.getLogin(), user1.getPassword());
             userRepository.save(userToAdd);
             return true;
         }
@@ -73,8 +68,6 @@ public class UserServiceImpl implements UserService {
                 return new UserLoginSuccessDto(token);
             }
         }
-        //check if pass hash matches
-        //generate token
         return null;
     }
 
@@ -83,6 +76,22 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findOneByToken(token);
         if(user!=null){//znaleziono
             return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean checkTokenAdmin(String token) {
+        User user = userRepository.findOneByToken(token);
+        if(user!=null){//znaleziono
+            if(user.getLogin().equals("admin")){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
             return false;

@@ -3,13 +3,13 @@ package com.pizzaserver.service.impl;
 import com.pizzaserver.domain.dto.FileData;
 import com.pizzaserver.domain.dto.UserDataDto;
 import com.pizzaserver.domain.model.pdfgenerator.DocumentComponent;
+import com.pizzaserver.domain.model.pdfgenerator.Resource;
 import com.pizzaserver.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pizzaserver.domain.model.pdfgenerator.Resource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,6 +50,28 @@ public class FileServiceImpl implements FileService {
 
         return null;
     }
+
+    /*@Override
+    public FileData createFile(MultipartFile multipartFile, String fileName) {
+        //String fileName = userDataDto.getFirstName() + userDataDto.getLastName() + "_" + ZonedDateTime.now().toEpochSecond() + ".pdf";
+        //String fileDestination = path + fileName;
+
+        try {
+
+            Files.createDirectories(Paths.get(fileName));
+            documentComponent.createDocument(userDataDto, fileDestination);
+
+            //FileData fileData = new FileData(fileName, getFileSize(fileDestination), ZonedDateTime.now());
+            resource.saveOne(fileData, fileName);
+
+            return fileData;
+
+        } catch (IOException e) {
+            LOGGER.error("i can't save data");
+        }
+
+        return null;
+    }*/
 
     private Long getFileSize(String fileDestination) throws IOException {
         Path filePath = Paths.get(fileDestination);

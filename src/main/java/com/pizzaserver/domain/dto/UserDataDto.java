@@ -17,10 +17,10 @@ import java.io.Serializable;
 @NoArgsConstructor                                  /* automatyczne generowanie konstruktora bezparametrowego */
 @FieldDefaults(level = AccessLevel.PRIVATE)         /* automatyczne generowanie zasiegu dla pol */
 public class UserDataDto implements Serializable {
-    //TODO add token
     String firstName;
     String lastName;
     String orderList;
+    String token;
 
     public String getFirstName() {
         return firstName;
@@ -32,5 +32,9 @@ public class UserDataDto implements Serializable {
 
     public String getOrderList() {
         return orderList;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

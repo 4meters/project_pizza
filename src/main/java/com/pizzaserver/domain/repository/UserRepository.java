@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CrudRepositor
 
     User findOneByToken(String token);
 
+
     /*@Modifying
     @Query("INSERT u.login FROM User u WHERE u.login = :login")
     //String selectByLogin(@Param("login") String login);*/

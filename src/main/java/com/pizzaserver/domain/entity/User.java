@@ -1,6 +1,8 @@
 package com.pizzaserver.domain.entity;
 
 import javax.persistence.*;
+
+import javax.persistence.Column;
 import java.io.Serializable;
 
 @Entity

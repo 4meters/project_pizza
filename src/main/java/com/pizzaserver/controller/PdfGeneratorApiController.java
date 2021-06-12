@@ -5,6 +5,7 @@ import com.pizzaserver.domain.dto.ErrorMessage;
 import com.pizzaserver.domain.dto.FileData;
 import com.pizzaserver.domain.dto.UserDataDto;
 import com.pizzaserver.service.FileService;
+import com.pizzaserver.service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,9 @@ public class PdfGeneratorApiController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private UserService userService;
+
     @CrossOrigin
     @GetMapping(value = "/server-test")
     public ResponseEntity<Map<String, String>> serverTest() {
@@ -58,18 +62,21 @@ public class PdfGeneratorApiController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/files/create-file")
+    @PostMapping(value = "/files/create-file") //Proceed Order
     public ResponseEntity<?> createFile(@RequestBody UserDataDto userDataDto) {
         LOGGER.info("--- create pdf file for user: {}", userDataDto.getFirstName());
 
-        FileData fileData = fileService.createFile(userDataDto, PATH);
+        if(userService.checkTokenUser(userDataDto.getToken())) {
+            FileData fileData = fileService.createFile(userDataDto, PATH);
 
-        ErrorDto errorMessage = new ErrorDto(ErrorMessage.ERROR_PATH.getErrorMessage());
-        HttpStatus errorCode = ErrorMessage.ERROR_PATH.getErrorCode();
+            ErrorDto errorMessage = new ErrorDto(ErrorMessage.ERROR_PATH.getErrorMessage());
+            HttpStatus errorCode = ErrorMessage.ERROR_PATH.getErrorCode();
 
-        return fileData != null ?
-                new ResponseEntity<>(fileData, HttpStatus.CREATED) :
-                new ResponseEntity<>(errorMessage, errorCode);
+            return fileData != null ?
+                    new ResponseEntity<>(fileData, HttpStatus.CREATED) :
+                    new ResponseEntity<>(errorMessage, errorCode);
+        }
+        else return null;
     }
 
     @RequestMapping(value = "/files/{file_name}", method = RequestMethod.GET)
