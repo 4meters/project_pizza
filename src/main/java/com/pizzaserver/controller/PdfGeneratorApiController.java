@@ -78,7 +78,7 @@ public class PdfGeneratorApiController {
                     new ResponseEntity<>(fileData, HttpStatus.CREATED) :
                     new ResponseEntity<>(errorMessage, errorCode);
         }
-        else return null;
+        else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(value = "/files/{file_name}", method = RequestMethod.GET)
