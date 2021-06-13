@@ -64,51 +64,52 @@ public class ProductListApiController {
         }
 
     }*/
-        //TODO WERYFIKACJA TOKENEM ADMINA!
     @CrossOrigin
     @GetMapping(value = "/get-productdatabase", produces = "text/csv")
-    public ResponseEntity<Resource> exportCSV(@RequestParam String token) throws IOException {
-        //ByteArrayOutputStream out = new ByteArrayOutputStream();
+    public ResponseEntity<Resource> exportCSV(@RequestParam(value="token") String token) throws IOException {
         if(userService.checkTokenAdmin(token)){
-        InputStream is = convertToInputStream(PRODUCT_DATABASE_PATH);
-        InputStreamResource inputStreamResource = new InputStreamResource(is);
+            InputStream is = convertToInputStream(PRODUCT_DATABASE_PATH);
+            InputStreamResource inputStreamResource = new InputStreamResource(is);
 
-        String csvFileName = "productList.csv";
+            String csvFileName = "productList.csv";
 
-        //setting HTTP headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + csvFileName);
-        //defining content type as csv
-        headers.set(HttpHeaders.CONTENT_TYPE, "text/csv");
+            //setting HTTP headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + csvFileName);
+            //defining content type as csv
+            headers.set(HttpHeaders.CONTENT_TYPE, "text/csv");
 
-        return new ResponseEntity<>(
-                inputStreamResource,
-                headers,
-                HttpStatus.OK
-        );
+            return new ResponseEntity<>(
+                    inputStreamResource,
+                    headers,
+                    HttpStatus.OK
+            );
         }
         else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
     @CrossOrigin
-    @PostMapping("/update-productdatabase") //TODO https://bezkoder.com/spring-boot-upload-csv-file/#Setup_Spring_Boot_CSV_File_UploadDownload_project
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
+    @PostMapping("/update-productdatabase")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam(value="file") MultipartFile file, @RequestParam("token") String token) {
+        if(userService.checkTokenAdmin(token)) {
+            String message = "";
 
-        if (CSVHelper.hasCSVFormat(file)) {
-            try {
-                file.transferTo(Paths.get("test.csv"));
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            if (CSVHelper.hasCSVFormat(file)) {
+                try {
+                    file.transferTo(Paths.get("test.csv"));
+                    message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+                } catch (Exception e) {
+                    message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+                }
             }
-        }
 
-        message = "Please upload a csv file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+            message = "Please upload a csv file!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+        else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
     }
 
     @Test

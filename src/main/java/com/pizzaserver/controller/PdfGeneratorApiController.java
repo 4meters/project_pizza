@@ -9,7 +9,6 @@ import com.pizzaserver.service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +31,14 @@ public class PdfGeneratorApiController {
 
     private static final String PATH = "D:/pdf/";
 
-    @Autowired
     private FileService fileService;
 
-    @Autowired
     private UserService userService;
+
+    PdfGeneratorApiController(FileService fileService, UserService userService){
+        this.fileService=fileService;
+        this.userService=userService;
+    }
 
     @CrossOrigin
     @GetMapping(value = "/server-test")
