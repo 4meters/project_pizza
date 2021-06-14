@@ -28,7 +28,7 @@ public class ProductListApiController {
     private final ProductListService productListService;
     private final UserService userService;
     String PRODUCT_DATABASE_PATH ="productList.csv";
-    //String PRODUCT_DATABASE_PATH ="chuck.pdf";
+
     @Autowired
     public ProductListApiController(ProductListService productListService, UserService userService) {
         this.productListService = productListService;
@@ -42,28 +42,6 @@ public class ProductListApiController {
         return new ResponseEntity<>(productListDto, HttpStatus.OK);
     }
 
-
-    /*@GetMapping(value="/get-productdatabase")
-    public ResponseEntity<ProductListDto> getProductList(){
-        ProductListDto productListDto = productListService.getProductList();
-        return new ResponseEntity<>(productListDto, HttpStatus.OK);
-    }*/
-    /*@CrossOrigin
-    @GetMapping(value = "/get-productdatabase")
-    public void getFile(HttpServletResponse response) {
-        try {
-            // get your file as InputStream
-
-            InputStream is = convertToInputStream(PRODUCT_DATABASE_PATH);
-            // copy it to response's OutputStream
-            org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
-        } catch (IOException ex) {
-            //LOGGER.info("Error writing file to output stream. Filename was '{}'", fileName, ex);
-            throw new RuntimeException("IOError writing file to output stream");
-        }
-
-    }*/
     @CrossOrigin
     @GetMapping(value = "/get-productdatabase", produces = "text/csv")
     public ResponseEntity<Resource> exportCSV(@RequestParam(value="token") String token) throws IOException {
@@ -97,7 +75,7 @@ public class ProductListApiController {
 
             if (CSVHelper.hasCSVFormat(file)) {
                 try {
-                    file.transferTo(Paths.get("test.csv"));
+                    file.transferTo(Paths.get("productList.csv"));
                     message = "Uploaded the file successfully: " + file.getOriginalFilename();
                     return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
                 } catch (Exception e) {

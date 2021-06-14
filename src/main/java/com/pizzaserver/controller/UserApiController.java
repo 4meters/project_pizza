@@ -1,10 +1,8 @@
 package com.pizzaserver.controller;
 
-import com.pizzaserver.domain.dto.UserListDto;
 import com.pizzaserver.domain.dto.UserLoginDto;
 import com.pizzaserver.domain.dto.UserLoginSuccessDto;
 import com.pizzaserver.domain.dto.UserRegisterDto;
-import com.pizzaserver.domain.entity.User;
 import com.pizzaserver.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -37,7 +36,7 @@ public class UserApiController {
 
     }
     @PostMapping(value = "/user/login")
-    public ResponseEntity<UserLoginSuccessDto> loginUser(@RequestBody UserLoginDto userLoginDto){
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginDto userLoginDto){
         UserLoginSuccessDto userLoginSuccessDto=userService.loginUser(userLoginDto);
         if(userLoginSuccessDto!=null){
             return new ResponseEntity<UserLoginSuccessDto>(userLoginSuccessDto, HttpStatus.CREATED);
@@ -47,12 +46,13 @@ public class UserApiController {
         }
     }
 
-    @GetMapping(value = "/user/test/readall")
+    //for testing
+    /*@GetMapping(value = "/user/test/readall")
     public ResponseEntity<UserListDto> getList(){
         List<User> u=userService.readAll();
 
         UserListDto u2= new UserListDto(u);
         return new ResponseEntity<UserListDto>(u2, HttpStatus.OK);
-    }
+    }*/
 
 }

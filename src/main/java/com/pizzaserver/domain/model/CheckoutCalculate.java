@@ -1,6 +1,7 @@
 package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
+import com.pizzaserver.domain.object.OrderListProduct;
 import com.pizzaserver.domain.object.Product;
 import com.pizzaserver.domain.object.ProductOnReceipt;
 import com.pizzaserver.domain.repository.ProductListRepository;

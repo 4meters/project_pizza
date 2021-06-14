@@ -1,6 +1,6 @@
 package com.pizzaserver.domain.mapper;
 
-import com.pizzaserver.domain.model.OrderListProduct;
+import com.pizzaserver.domain.object.OrderListProduct;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

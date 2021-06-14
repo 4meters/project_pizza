@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-/** Klasa odpowiedzialna za przechowywanie informacji o bledach w aplikacji */
 
 @Getter
 //@AllArgsConstructor

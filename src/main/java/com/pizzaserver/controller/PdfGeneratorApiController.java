@@ -9,6 +9,9 @@ import com.pizzaserver.service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +32,7 @@ public class PdfGeneratorApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PdfGeneratorApiController.class);
 
-    private static final String PATH = "D:/pdf/";
+    private static final String PATH = "pdf/";
 
     private FileService fileService;
 
@@ -82,20 +85,29 @@ public class PdfGeneratorApiController {
     }
 
     @RequestMapping(value = "/files/{file_name}", method = RequestMethod.GET)
-    public void getFile(
-            @PathVariable("file_name") String fileName,
+    public ResponseEntity<Resource> getFile(
+            @PathVariable("file_name") String fileName, @RequestParam String token,
             HttpServletResponse response) {
-        try {
-            // get your file as InputStream
+        if(userService.checkTokenUser(token)) {
+            try {
+                InputStream is = convertToInputStream(fileName);
 
-            InputStream is = convertToInputStream(fileName);
-            // copy it to response's OutputStream
-            org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
-        } catch (IOException ex) {
-            LOGGER.info("Error writing file to output stream. Filename was '{}'", fileName, ex);
-            throw new RuntimeException("IOError writing file to output stream");
+                InputStreamResource inputStreamResource = new InputStreamResource(is);
+
+                //setting HTTP headers
+                HttpHeaders headers = new HttpHeaders();
+                headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName+".pdf");
+                //defining content type as pdf
+                headers.set(HttpHeaders.CONTENT_TYPE, "application/pdf");
+
+                return new ResponseEntity<Resource>(inputStreamResource, headers, HttpStatus.OK);
+
+            } catch (IOException ex) {
+                LOGGER.info("Error writing file to output stream. Filename was '{}'", fileName, ex);
+                throw new RuntimeException("IOError writing file to output stream");
+            }
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
     }
     @Test

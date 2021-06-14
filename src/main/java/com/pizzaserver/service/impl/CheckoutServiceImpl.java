@@ -5,7 +5,7 @@ import com.pizzaserver.domain.dto.CheckoutDto;
 import com.pizzaserver.domain.mapper.CheckoutMapper;
 import com.pizzaserver.domain.mapper.Converter;
 import com.pizzaserver.domain.model.CheckoutCalculate;
-import com.pizzaserver.domain.model.OrderListProduct;
+import com.pizzaserver.domain.object.OrderListProduct;
 import com.pizzaserver.service.CheckoutService;
 import org.springframework.stereotype.Service;
 

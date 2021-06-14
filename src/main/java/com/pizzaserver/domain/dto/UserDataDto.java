@@ -8,14 +8,11 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 
-/**
- * Klasa odpowidzialna jest za przetrzymywanie podstawowych informacji o uzytkowniku.
- */
-                                                    /* lombok: */
-@Getter                                             /* automatyczne generowanie getterow dla pol */
-@ToString                                           /* automatyczne generowanie metody toString */
-@NoArgsConstructor                                  /* automatyczne generowanie konstruktora bezparametrowego */
-@FieldDefaults(level = AccessLevel.PRIVATE)         /* automatyczne generowanie zasiegu dla pol */
+
+@Getter
+@ToString
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDataDto implements Serializable {
     String firstName;
     String lastName;

@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -27,22 +25,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String readUser(String login) {
-        User user=userRepository.findOneByLogin(login);
-        //if(user!=null)
-        return user.getLogin();
-    }
-    @Override
-    public List<User> readAll() {
-        List<User> users=userRepository.findAll();
-        return users;
-    }
-
-    @Override
     public boolean createUser(UserRegisterDto userRegisterDto) {//?mapper na User?
         //LOGGER.info("User to register: {} {}", userRegisterDto.getLogin(), userRegisterDto.getPassword());
         User userInDatabase=userRepository.findOneByLogin(userRegisterDto.getLogin());
-        if(userInDatabase==null){//uzytkownik nie istnieje w bazie - mozna rejestrowac
+        if(userInDatabase==null){//user does not exist - can register
             User userToAdd=new User.Builder()
                     .login(userRegisterDto.getLogin())
                     .password(userRegisterDto.getPassword())
@@ -74,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkTokenUser(String token) {
         User user = userRepository.findOneByToken(token);
-        if(user!=null){//znaleziono
+        if(user!=null){//found user
             return true;
         }
         else{
@@ -85,7 +71,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkTokenAdmin(String token) {
         User user = userRepository.findOneByToken(token);
-        if(user!=null){//znaleziono
+        if(user!=null){//found user
             if(user.getLogin().equals("admin")){
                 return true;
             }
@@ -97,4 +83,11 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    //for testing
+    /*@Override
+    public List<User> readAll() {
+        List<User> users=userRepository.findAll();
+        return users;
+    }*/
 }

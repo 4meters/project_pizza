@@ -1,6 +1,7 @@
 package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
+import com.pizzaserver.domain.object.OrderListProduct;
 import com.pizzaserver.domain.object.Product;
 import com.pizzaserver.domain.repository.ProductListRepository;
 
@@ -8,8 +9,8 @@ import java.util.ArrayList;
 
 public class CheckoutDiscountCalculate {
 
-    private boolean discountHalfPrice=false; //discount type 1
-    private boolean discountFreeDrink=false; //2 (HP+FD)
+    private boolean discountHalfPrice=false; //discount type 1 (when 2 same pizzas in cart, second cheaper by 50%)
+    private boolean discountFreeDrink=false; //2 (discountHP & discountFD) (drink is free, when 2 same pizzas in cart)
     private boolean discountRealDeal=false; //3        //order over 100zł is cheaper by 20% of its price
     private int pizzaCount=0; //pizzas count
     private ArrayList<OrderListProduct> discountHPlist;
@@ -89,47 +90,15 @@ public class CheckoutDiscountCalculate {
 
             for (Product product : productList) {
                 if (product.getId().equals(orderHalfPriceProduct.getOrderId())) {
-                    switch (orderHalfPriceProduct.getOrderSize()) {
-                        case "S": {
-                            totalCostDiscount-=(Double.parseDouble(product.getCostS().replace(',', '.'))) * 0.5;
-                            break;
-                        }
-                        case "M": {
-                            totalCostDiscount-=(Double.parseDouble(product.getCostM().replace(',', '.'))) * 0.5;
-                            break;
-                        }
-                        case "L": {
-                            totalCostDiscount-=(Double.parseDouble(product.getCostL().replace(',', '.'))) * 0.5;
-                            break;
-                        }
-                        case "U": {
-                            totalCostDiscount-=(Double.parseDouble(product.getCostU().replace(',', '.'))) * 0.5;
-                            break;
-                        }
-                    }
+                    totalCostDiscount-=(Double.parseDouble(product.getCostBySize(orderHalfPriceProduct.getOrderSize())
+                            .replace(',', '.'))) * 0.5;
                 }
             }
             if (discountFreeDrink) {
                 for (Product product : productList) {
                     if (product.getId().equals(discountFDid.getOrderId())) {
-                        switch (discountFDid.getOrderSize()) {
-                            case "S": {
-                                totalCostDiscount-=(Double.parseDouble(product.getCostS().replace(',', '.')));
-                                break;
-                            }
-                            case "M": {
-                                totalCostDiscount-=(Double.parseDouble(product.getCostM().replace(',', '.')));
-                                break;
-                            }
-                            case "L": {
-                                totalCostDiscount-=(Double.parseDouble(product.getCostL().replace(',', '.')));
-                                break;
-                            }
-                            case "U": {
-                                totalCostDiscount-=(Double.parseDouble(product.getCostU().replace(',', '.')));
-                                break;
-                            }
-                        }
+                        totalCostDiscount-=(Double.parseDouble(product.getCostBySize(discountFDid.getOrderSize())
+                                .replace(',', '.')));
                     }
                 }
             }
@@ -137,22 +106,43 @@ public class CheckoutDiscountCalculate {
     }
     public CheckoutCalculatedDto getFinalCost(){
         CheckoutCalculatedDto checkoutCalculatedDto;
-        if(discountRealDeal){
-            checkoutCalculatedDto= new CheckoutCalculatedDto(Double.toString(totalCost),Double.toString(totalCostDiscount),"3","");
+
+        if(discountRealDeal){//discount 20%
+            checkoutCalculatedDto= new CheckoutCalculatedDto(
+                    Double.toString(totalCost),
+                    Double.toString(totalCostDiscount),
+                    "3",
+                    "");
         }
+
         else if(discountHalfPrice){
+            //create list of products with half price discount
             String discountIds='('+discountHPlist.get(0).getOrderId()+','+discountHPlist.get(0).getOrderSize()+"),("+
                     discountHPlist.get(1).getOrderId()+','+discountHPlist.get(1).getOrderSize()+')';
-            if(discountFreeDrink){
+
+            if(discountFreeDrink){//half price + free drink discount
+                //add drink to discount list
                 discountIds+=",("+discountFDid.getOrderId()+','+discountFDid.getOrderSize()+')';
-                checkoutCalculatedDto= new CheckoutCalculatedDto(Double.toString(totalCost),Double.toString(totalCostDiscount),"2",discountIds);
+
+                checkoutCalculatedDto= new CheckoutCalculatedDto(
+                        Double.toString(totalCost),
+                        Double.toString(totalCostDiscount),
+                        "2",discountIds);
             }
-            else{
-                checkoutCalculatedDto= new CheckoutCalculatedDto(Double.toString(totalCost),Double.toString(totalCostDiscount),"1",discountIds);
+            else{//only half price discount
+                checkoutCalculatedDto= new CheckoutCalculatedDto(
+                        Double.toString(totalCost),
+                        Double.toString(totalCostDiscount),
+                        "1",discountIds);
             }
         }
-        else{
-            checkoutCalculatedDto= new CheckoutCalculatedDto(Double.toString(totalCost),Double.toString(totalCostDiscount),"0","");
+
+        else{//no discount
+            checkoutCalculatedDto= new CheckoutCalculatedDto(
+                    Double.toString(totalCost),
+                    Double.toString(totalCostDiscount),
+                    "0",
+                    "");
         }
 
         return checkoutCalculatedDto;

@@ -1,4 +1,4 @@
-package com.pizzaserver.domain.model;
+package com.pizzaserver.domain.object;
 
 /**
  * Product from order list by format "($orderId, $orderSize, $orderCount)"
