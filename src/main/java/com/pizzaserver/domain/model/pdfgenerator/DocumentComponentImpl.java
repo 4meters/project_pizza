@@ -18,8 +18,12 @@ import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Class used for generating receipt in pdf file
+ */
 @Component
 public class DocumentComponentImpl implements DocumentComponent {
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentComponentImpl.class);
     DecimalFormat decimalFormat=new DecimalFormat("0.00");

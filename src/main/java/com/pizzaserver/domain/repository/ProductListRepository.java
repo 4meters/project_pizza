@@ -8,6 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class for reading CSV file with list of products
+ * <p>
+ * Returns ArrayList of Product
+ */
 @Repository
 public class ProductListRepository {
 

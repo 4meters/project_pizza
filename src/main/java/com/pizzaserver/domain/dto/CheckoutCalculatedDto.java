@@ -1,6 +1,11 @@
 package com.pizzaserver.domain.dto;
 
+/**
+ * Stores information about order cost and discounts
+ */
 public class CheckoutCalculatedDto {
+
+
     private String cost;
     private String costDiscount;
     private String discountType;

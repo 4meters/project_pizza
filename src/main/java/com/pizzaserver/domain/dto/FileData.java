@@ -3,6 +3,9 @@ package com.pizzaserver.domain.dto;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class for storing generated file parameters.
+ */
 public class FileData {
     private String fileName;
     private Long size;

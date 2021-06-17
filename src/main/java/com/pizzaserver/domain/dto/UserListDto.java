@@ -4,8 +4,13 @@ import com.pizzaserver.domain.entity.User;
 
 import java.util.List;
 
-//for testing
+/**
+ * Class for testing - stores entire database in ArrayList
+ * <p>
+ * Not used by default
+ */
 public class UserListDto {
+
     private List<User> userList;
 
     public UserListDto(List<User> userList) {

@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for UserApiController
+ */
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -25,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean createUser(UserRegisterDto userRegisterDto) {//?mapper na User?
+    public boolean createUser(UserRegisterDto userRegisterDto) {
         //LOGGER.info("User to register: {} {}", userRegisterDto.getLogin(), userRegisterDto.getPassword());
         User userInDatabase=userRepository.findOneByLogin(userRegisterDto.getLogin());
         if(userInDatabase==null){//user does not exist - can register

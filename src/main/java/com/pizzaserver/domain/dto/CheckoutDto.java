@@ -1,8 +1,14 @@
 package com.pizzaserver.domain.dto;
 
+/**
+ * Stores list of products to order
+ * <p>one product is coded in pattern: "(id,size,count)"</p>
+ * <p>each product is defined in brackets and splitted by comma</p>
+ * <p>example orderList: "(1,S,1),(5,M,1)"</p>
+ */
 public class CheckoutDto {
+
     private String orderList;
-    //TODO add token
 
     public CheckoutDto(){
     }

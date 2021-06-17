@@ -7,6 +7,21 @@ import com.pizzaserver.domain.repository.ProductListRepository;
 
 import java.util.ArrayList;
 
+/**
+ * Class called by CheckoutCalculate, it's used to calculate discounts of order and final cost after discounts
+ *
+ * <p>discountHalfPrice - true if order has 2 same pizzas (discount type 1)</p>
+ * <p>discountFreeDrink - true if order has 2 same pizzas and drink - results in free drink (combines with discountHalfPrice)</p>
+ * <p>discountRealDeal - true if order is over 100zł - results in order cheaper by 20% of its price</p>
+ * <p>pizzaCount - pizzas count</p>
+ * <p>discountHPlist - list of products with HalfPrice discount</p>
+ * <p>OrderListProduct - discountFDid</p>
+ * <p>totalCost - order total cost before discount</p>
+ * <p>totalCostDiscount - order total cost after discount</p>
+ *
+ *
+*/
+
 public class CheckoutDiscountCalculate {
 
     private boolean discountHalfPrice=false; //discount type 1 (when 2 same pizzas in cart, second cheaper by 50%)

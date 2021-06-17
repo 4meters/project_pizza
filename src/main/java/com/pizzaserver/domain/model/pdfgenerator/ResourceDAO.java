@@ -19,8 +19,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class used to store list of saved files
+ */
 @Repository
 public class ResourceDAO implements Resource {
+
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceDAO.class);
 

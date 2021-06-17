@@ -6,8 +6,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+/**
+ * Converts ArrayList of Product to ProductListDto
+ */
 @Component
 public class ProductListMapper implements Converter<ProductListDto, ArrayList<Product>> {
+
     @Override
     public ProductListDto convert(ArrayList<Product> productList) {
         return new ProductListDto(productList);

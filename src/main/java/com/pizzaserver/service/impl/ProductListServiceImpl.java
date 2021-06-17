@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * Service for ProductListApiController
+ */
 @Service
 public class ProductListServiceImpl implements ProductListService {
     private final ProductListRepository productListRepository;

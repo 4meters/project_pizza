@@ -66,6 +66,11 @@ public class PdfGeneratorApiController {
                 new ResponseEntity<>(files, HttpStatus.OK);
     }
 
+    /**
+     * Api for request to generate pdf receipt
+     * @param userDataDto firstname, lastname, orderlist, token
+     * @return filename of generated pdf
+     */
     @CrossOrigin
     @PostMapping(value = "/files/create-file") //Proceed Order
     public ResponseEntity<?> createFile(@RequestBody UserDataDto userDataDto) {
@@ -84,6 +89,13 @@ public class PdfGeneratorApiController {
         else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Api for downloading pdf file with receipt
+     * @param fileName name of file to download
+     * @param token user login token
+     * @param response used for detailing error message
+     * @return pdf file
+     */
     @RequestMapping(value = "/files/{file_name}", method = RequestMethod.GET)
     public ResponseEntity<Resource> getFile(
             @PathVariable("file_name") String fileName, @RequestParam String token,

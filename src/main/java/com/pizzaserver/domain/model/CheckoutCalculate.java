@@ -13,10 +13,11 @@ import java.util.concurrent.Callable;
 
 /**
  * Calculates total cost, and cost after discount also gives discount type
- * CheckoutDto --> CheckoutCalculatedDto
+ * <p>
+ * CheckoutDto → CheckoutCalculatedDto
  */
-
 public class CheckoutCalculate {
+
     ArrayList<OrderListProduct> orderListSplitted;
     CheckoutCalculatedDto checkoutCalculatedDto;
     ArrayList<Product> productList;

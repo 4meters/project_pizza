@@ -3,6 +3,9 @@ package com.pizzaserver.domain.object;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores information about product
+ */
 public class Product {
     private String id, type, name, description;
     private String costS, costM, costL, costU;

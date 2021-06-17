@@ -5,6 +5,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+/**
+ * Converts order list String to ArrayList of OrderListProduct
+ * <p>"(id,size,count)" → OrderListProduct(id,size,count)</p>
+ * <p>Example:
+ *     "(1,M,1)" → OrderListProduct(1,M,1)
+ * </p>
+ */
 @Component
 public class CheckoutMapper implements Converter<ArrayList<OrderListProduct>, String>{
 

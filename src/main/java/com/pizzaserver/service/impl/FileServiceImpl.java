@@ -18,6 +18,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * Service used for saving pdf to file
+ */
 @Service
 public class FileServiceImpl implements FileService {
 

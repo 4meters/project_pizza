@@ -3,6 +3,9 @@ package com.pizzaserver.domain.model;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * Class used for generating login tokens
+ */
 public class TokenGenerator {
     private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe

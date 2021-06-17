@@ -23,6 +23,11 @@ public class CheckoutApiController {
         this.checkoutService = checkoutService;
     }
 
+    /**
+     * Api for calculating order cost
+     * @param checkoutDto orderlist
+     * @return ordercost, ordercost after discounts, discount type, discount productlist
+     */
     @PostMapping(value="/checkout")
     public ResponseEntity<CheckoutCalculatedDto> orderCheckout(@RequestBody CheckoutDto checkoutDto){
         LOGGER.info("### Method orderCheckout!");

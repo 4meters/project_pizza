@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * Service for CheckoutApiController
+ */
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 

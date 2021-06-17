@@ -35,6 +35,10 @@ public class ProductListApiController {
         this.userService = userService;
     }
 
+    /**
+     * Api for getting productList from database
+     * @return productlist in JSON
+     */
     @CrossOrigin
     @GetMapping(value="/get-productlist")
     public ResponseEntity<ProductListDto> getProductList(){
@@ -42,6 +46,12 @@ public class ProductListApiController {
         return new ResponseEntity<>(productListDto, HttpStatus.OK);
     }
 
+    /**
+     * Api for downloading database in CSV file. Verifies if it's request by admin by verifying token
+     * @param token admin token
+     * @return product database CSV file
+     * @throws IOException error saving file
+     */
     @CrossOrigin
     @GetMapping(value = "/get-productdatabase", produces = "text/csv")
     public ResponseEntity<Resource> exportCSV(@RequestParam(value="token") String token) throws IOException {
@@ -67,6 +77,13 @@ public class ProductListApiController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    /**
+     * Api for receiving edited productlist in csv and updating it in server
+     * @param file csv file
+     * @param token admin token
+     * @return HTTP Status
+     */
     @CrossOrigin
     @PostMapping("/update-productdatabase")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam(value="file") MultipartFile file, @RequestParam("token") String token) {

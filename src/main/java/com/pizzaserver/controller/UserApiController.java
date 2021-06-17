@@ -29,12 +29,23 @@ public class UserApiController {
         this.userService = userService;
     }
 
+    /**
+     * Api for registering new user
+     * @param userRegisterDto login, password
+     * @return true if user is created or false if not
+     */
     @PostMapping(value = "/user/create")
     public ResponseEntity<Boolean> createUser(@RequestBody UserRegisterDto userRegisterDto){
         boolean isCreated=userService.createUser(userRegisterDto);
         return new ResponseEntity<Boolean>(isCreated, HttpStatus.CREATED);
 
     }
+
+    /**
+     * Api for user log in
+     * @param userLoginDto login, password
+     * @return token or bad request if login or password is incorrect or user does not exists
+     */
     @PostMapping(value = "/user/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginDto userLoginDto){
         UserLoginSuccessDto userLoginSuccessDto=userService.loginUser(userLoginDto);
@@ -42,7 +53,7 @@ public class UserApiController {
             return new ResponseEntity<UserLoginSuccessDto>(userLoginSuccessDto, HttpStatus.CREATED);
         }
         else {
-            return new ResponseEntity<UserLoginSuccessDto>((UserLoginSuccessDto) null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
