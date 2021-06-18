@@ -10,8 +10,8 @@ import java.util.ArrayList;
 /**
  * Class called by CheckoutCalculate, it's used to calculate discounts of order and final cost after discounts
  *
- * <p>discountHalfPrice - true if order has 2 same pizzas (discount type 1)</p>
- * <p>discountFreeDrink - true if order has 2 same pizzas and drink - results in free drink (combines with discountHalfPrice)</p>
+ * <p>discountHalfPrice - true if order has 2 pizzas (discount type 1)</p>
+ * <p>discountFreeDrink - true if order has 2 pizzas and drink - results in free drink (combines with discountHalfPrice)</p>
  * <p>discountRealDeal - true if order is over 100zł - results in order cheaper by 20% of its price</p>
  * <p>pizzaCount - pizzas count</p>
  * <p>discountHPlist - list of products with HalfPrice discount</p>
@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 public class CheckoutDiscountCalculate {
 
-    private boolean discountHalfPrice=false; //discount type 1 (when 2 same pizzas in cart, second cheaper by 50%)
-    private boolean discountFreeDrink=false; //2 (discountHP & discountFD) (drink is free, when 2 same pizzas in cart)
+    private boolean discountHalfPrice=false; //discount type 1 (when 2 pizzas in cart, second cheaper by 50%)
+    private boolean discountFreeDrink=false; //2 (discountHP & discountFD) (drink is free, when 2 pizzas in cart)
     private boolean discountRealDeal=false; //3        //order over 100zł is cheaper by 20% of its price
     private int pizzaCount=0; //pizzas count
     private ArrayList<OrderListProduct> discountHPlist;
