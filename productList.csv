@@ -1,3 +1,4 @@
+id;type;name;description;costS;costM;costL;costU
 1;0;SERRR;sos, ser, oregano;20,00;27,50;34,50;NULL
 2;0;OREGANO;sos, ser, pieczarki, oregano;21,00;29,00;36,00;NULL
 3;0;CAPRICIOSA;sos, ser, pieczarki, szynka;23,00;32,00;38,50;NULL

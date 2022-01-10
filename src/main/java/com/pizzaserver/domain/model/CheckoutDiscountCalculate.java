@@ -1,11 +1,12 @@
 package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
+import com.pizzaserver.domain.entity.Product;
 import com.pizzaserver.domain.object.OrderListProduct;
-import com.pizzaserver.domain.object.Product;
-import com.pizzaserver.domain.repository.ProductListRepository;
+import com.pizzaserver.service.ProductService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class called by CheckoutCalculate, it's used to calculate discounts of order and final cost after discounts
@@ -33,15 +34,15 @@ public class CheckoutDiscountCalculate {
     private double totalCost;
     private double totalCostDiscount=0;
 
-    private ArrayList<Product> productList;
+    private List<Product> productList;
     private ArrayList<OrderListProduct> orderListSplitted;
 
-    public CheckoutDiscountCalculate(ArrayList<OrderListProduct> orderListSplitted, double totalCost) {
+    public CheckoutDiscountCalculate(ArrayList<OrderListProduct> orderListSplitted, double totalCost, ProductService productService) {
         this.totalCost=totalCost;
         this.orderListSplitted=orderListSplitted;
 
         discountHPlist=new ArrayList<>();
-        productList=new ProductListRepository().getProductList();
+        productList = productService.getProductList().getProductList();
         discountCheck();
         discountCount();
     }

@@ -8,9 +8,11 @@ import com.pizzaserver.domain.dto.UserDataDto;
 import com.pizzaserver.domain.model.CheckoutCalculate;
 import com.pizzaserver.domain.object.ProductOnReceipt;
 import com.pizzaserver.service.CheckoutService;
+import com.pizzaserver.service.ProductService;
 import com.pizzaserver.service.impl.CheckoutServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
@@ -29,14 +31,18 @@ public class DocumentComponentImpl implements DocumentComponent {
     DecimalFormat decimalFormat=new DecimalFormat("0.00");
     private CheckoutService checkoutService;
 
+    @Autowired
+    private ProductService productService;
+
+
     @Override
     public void createDocument(UserDataDto userDataDto, String fileDestination) {
         try {
 
 
 
-            checkoutService=new CheckoutServiceImpl();
-            CheckoutCalculate checkoutCalculate=new CheckoutCalculate(checkoutService.checkoutOrderListDecode(userDataDto.getOrderList()));
+            checkoutService=new CheckoutServiceImpl(productService);
+            CheckoutCalculate checkoutCalculate=new CheckoutCalculate(checkoutService.checkoutOrderListDecode(userDataDto.getOrderList()), productService);
             CheckoutCalculatedDto checkoutCalculatedDto = checkoutCalculate.getCheckoutCalculatedDto();
             ArrayList<ProductOnReceipt> productOnReceiptList = checkoutCalculate.getCheckoutProducts();
 

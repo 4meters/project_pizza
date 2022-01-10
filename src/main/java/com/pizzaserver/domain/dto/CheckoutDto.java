@@ -20,4 +20,24 @@ public class CheckoutDto {
     public String getOrderList() {
         return orderList;
     }
+
+    public static final class CheckoutDtoBuilder {
+        private String orderList;
+
+        private CheckoutDtoBuilder() {
+        }
+
+        public static CheckoutDtoBuilder aCheckoutDto() {
+            return new CheckoutDtoBuilder();
+        }
+
+        public CheckoutDtoBuilder orderList(String orderList) {
+            this.orderList = orderList;
+            return this;
+        }
+
+        public CheckoutDto build() {
+            return new CheckoutDto(orderList);
+        }
+    }
 }

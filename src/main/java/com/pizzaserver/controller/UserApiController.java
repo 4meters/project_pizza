@@ -1,8 +1,7 @@
 package com.pizzaserver.controller;
 
-import com.pizzaserver.domain.dto.UserLoginDto;
-import com.pizzaserver.domain.dto.UserLoginSuccessDto;
-import com.pizzaserver.domain.dto.UserRegisterDto;
+import com.pizzaserver.domain.dto.*;
+import com.pizzaserver.domain.entity.User;
 import com.pizzaserver.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -37,7 +35,12 @@ public class UserApiController {
     @PostMapping(value = "/user/create")
     public ResponseEntity<Boolean> createUser(@RequestBody UserRegisterDto userRegisterDto){
         boolean isCreated=userService.createUser(userRegisterDto);
-        return new ResponseEntity<Boolean>(isCreated, HttpStatus.CREATED);
+        if(isCreated){
+            return new ResponseEntity<Boolean>(isCreated, HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<Boolean>(isCreated, HttpStatus.BAD_REQUEST);
+        }
 
     }
 
@@ -57,13 +60,35 @@ public class UserApiController {
         }
     }
 
+    @PostMapping(value = "/user/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody UserLoginDto userLoginDto){
+        boolean isDeleted = userService.deleteUser(userLoginDto);
+        if(isDeleted){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/user/change-password")
+    public ResponseEntity<?> deleteUser(@RequestBody UserChangePasswordDto userChangePasswordDto){
+        boolean isPasswordChanged=userService.changePassword(userChangePasswordDto);
+        if(isPasswordChanged){
+            return new ResponseEntity<UserLoginSuccessDto>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     //for testing
-    /*@GetMapping(value = "/user/test/readall")
+    @GetMapping(value = "/user/test/readall")
     public ResponseEntity<UserListDto> getList(){
         List<User> u=userService.readAll();
 
         UserListDto u2= new UserListDto(u);
         return new ResponseEntity<UserListDto>(u2, HttpStatus.OK);
-    }*/
+    }
 
 }

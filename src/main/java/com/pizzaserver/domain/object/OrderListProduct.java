@@ -1,7 +1,7 @@
 package com.pizzaserver.domain.object;
 
 /**
- * Product from order list
+ * ProductCSV from order list
  * <p>(orderId, orderSize, orderCount)</p>
  * @see com.pizzaserver.domain.dto.CheckoutDto
  */

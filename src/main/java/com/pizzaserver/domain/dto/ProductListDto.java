@@ -1,21 +1,21 @@
 package com.pizzaserver.domain.dto;
 
-import com.pizzaserver.domain.object.Product;
+import com.pizzaserver.domain.entity.Product;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores product list read from CSV file.
  */
 public class ProductListDto {
 
-    private ArrayList<Product> productList;
+    private List<Product> productList;
 
-    public ProductListDto(ArrayList<Product> productList) {
+    public ProductListDto(List<Product> productList) {
         this.productList = productList;
     }
 
-    public ArrayList<Product> getProductList() {
+    public List<Product> getProductList() {
         return productList;
     }
 }

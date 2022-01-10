@@ -1,9 +1,10 @@
 package com.pizzaserver.controller;
 
+import com.pizzaserver.domain.dto.ProductDto;
 import com.pizzaserver.domain.dto.ProductListDto;
 import com.pizzaserver.domain.dto.ResponseMessage;
 import com.pizzaserver.helper.CSVHelper;
-import com.pizzaserver.service.ProductListService;
+import com.pizzaserver.service.ProductService;
 import com.pizzaserver.service.UserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,15 +25,16 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 
 @Controller
-@RequestMapping(value="/api")
-public class ProductListApiController {
-    private final ProductListService productListService;
+@CrossOrigin
+@RequestMapping(value="/api/product")
+public class ProductApiController {
+    private final ProductService productService;
     private final UserService userService;
     String PRODUCT_DATABASE_PATH ="productList.csv";
 
     @Autowired
-    public ProductListApiController(ProductListService productListService, UserService userService) {
-        this.productListService = productListService;
+    public ProductApiController(ProductService productService, UserService userService) {
+        this.productService = productService;
         this.userService = userService;
     }
 
@@ -39,10 +42,10 @@ public class ProductListApiController {
      * Api for getting productList from database
      * @return productlist in JSON
      */
-    @CrossOrigin
+
     @GetMapping(value="/get-productlist")
     public ResponseEntity<ProductListDto> getProductList(){
-        ProductListDto productListDto = productListService.getProductList();
+        ProductListDto productListDto = productService.getProductList();
         return new ResponseEntity<>(productListDto, HttpStatus.OK);
     }
 
@@ -52,8 +55,25 @@ public class ProductListApiController {
      * @return product database CSV file
      * @throws IOException error saving file
      */
-    @CrossOrigin
-    @GetMapping(value = "/get-productdatabase", produces = "text/csv")
+
+    @RequestMapping(value = "/get-product/{productId}", method = RequestMethod.GET)
+    public ResponseEntity<ProductDto> getFile(
+            @PathVariable("productId") String productId,
+            HttpServletResponse response) {
+
+        ProductDto productDto = productService.getProduct(productId);
+        if(productDto!=null){
+            return new ResponseEntity<>(productDto, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+
+    }
+
+    @GetMapping(value = "/get-database", produces = "text/csv")
     public ResponseEntity<Resource> exportCSV(@RequestParam(value="token") String token) throws IOException {
         if(userService.checkTokenAdmin(token)){
             InputStream is = convertToInputStream(PRODUCT_DATABASE_PATH);
@@ -84,16 +104,17 @@ public class ProductListApiController {
      * @param token admin token
      * @return HTTP Status
      */
-    @CrossOrigin
-    @PostMapping("/update-productdatabase")
+
+    @PostMapping("/update-database")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam(value="file") MultipartFile file, @RequestParam("token") String token) {
         if(userService.checkTokenAdmin(token)) {
             String message = "";
 
             if (CSVHelper.hasCSVFormat(file)) {
                 try {
-                    file.transferTo(Paths.get("productList.csv"));
+                    file.transferTo(Paths.get("productListUpdate.csv"));
                     message = "Uploaded the file successfully: " + file.getOriginalFilename();
+
                     return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
                 } catch (Exception e) {
                     message = "Could not upload the file: " + file.getOriginalFilename() + "!";
@@ -105,6 +126,42 @@ public class ProductListApiController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
         else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+    }
+
+    @PostMapping("/add-product/{token}")
+    public ResponseEntity<ResponseMessage> addProduct(@RequestParam("token") String token, @RequestBody ProductDto productDto) {
+        if (userService.checkTokenAdmin(token)) {
+            String message = "";
+            if (productService.addProduct(productDto) == true) {
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+            }
+        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+    }
+
+    @PostMapping("/edit-product/{token}")
+    public ResponseEntity<ResponseMessage> editProduct(@RequestParam("token") String token, @RequestBody ProductDto productDto) {
+        if (userService.checkTokenAdmin(token)) {
+            String message = "";
+            if (productService.editProduct(productDto) == true) {
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+            }
+        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+    }
+
+    @DeleteMapping("/edit-product/{productId}{token}")
+    public ResponseEntity<ResponseMessage> deleteProduct(@RequestParam("productId") String productId, @RequestParam("token") String token) {
+        if (userService.checkTokenAdmin(token)) {
+            String message = "";
+            if (productService.deleteProduct(productId) == true) {
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+            }
+        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
     }
 
     @Test

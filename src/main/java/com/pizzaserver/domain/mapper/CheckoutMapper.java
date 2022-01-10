@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class CheckoutMapper implements Converter<ArrayList<OrderListProduct>, String>{
 
     @Override
+    //public ArrayList<OrderListProduct> convert(List<ProductCSV> from) {
     public ArrayList<OrderListProduct> convert(String from) {
         ArrayList<OrderListProduct> orderListSplitted=new ArrayList<>();
         String orderId="",orderSize="",orderCount="";

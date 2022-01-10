@@ -1,13 +1,14 @@
 package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
+import com.pizzaserver.domain.entity.Product;
 import com.pizzaserver.domain.object.OrderListProduct;
-import com.pizzaserver.domain.object.Product;
 import com.pizzaserver.domain.object.ProductOnReceipt;
-import com.pizzaserver.domain.repository.ProductListRepository;
+import com.pizzaserver.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -20,12 +21,14 @@ public class CheckoutCalculate {
 
     ArrayList<OrderListProduct> orderListSplitted;
     CheckoutCalculatedDto checkoutCalculatedDto;
-    ArrayList<Product> productList;
+    //ArrayList<ProductCSV> productCSVList;
+    ProductService productService;
 
 
-    public CheckoutCalculate(ArrayList<OrderListProduct> orderListSplitted) {
+    public CheckoutCalculate(ArrayList<OrderListProduct> orderListSplitted, ProductService productService) {
         this.orderListSplitted = orderListSplitted;
-        this.productList = new ProductListRepository().getProductList();
+        this.productService = productService;
+        //this.productCSVList = new ProductListRepository().getProductList();
     }
 
 
@@ -38,7 +41,7 @@ public class CheckoutCalculate {
     }
 
     private void checkoutCountDiscount(double totalCost) {
-        checkoutCalculatedDto = new CheckoutDiscountCalculate(orderListSplitted, totalCost).getFinalCost();
+        checkoutCalculatedDto = new CheckoutDiscountCalculate(orderListSplitted, totalCost, productService).getFinalCost();
     }
 
     public CheckoutCalculatedDto getCheckoutCalculatedDto() {
@@ -47,10 +50,12 @@ public class CheckoutCalculate {
     }
 
     public ArrayList<ProductOnReceipt> getCheckoutProducts(){ //forPdfGenerator
+        List<Product> productList = productService.getProductList().getProductList();
         ArrayList<ProductOnReceipt> productOnReceiptList=new ArrayList<>();
         Map<Integer, Callable> map = new HashMap<>();
         for(OrderListProduct orderListProduct : orderListSplitted){
-            for(Product product: productList) {
+            //query for productId
+            for(Product product : productList) {
                 if(product.getId().equals(orderListProduct.getOrderId())) {
                     String totalCost=calculateSingleProduct(orderListProduct);
                     productOnReceiptList.add(new ProductOnReceipt(
@@ -68,10 +73,11 @@ public class CheckoutCalculate {
     }
 
     private String calculateSingleProduct(OrderListProduct orderListProduct){
+        List<Product> productList = productService.getProductList().getProductList();
         double totalCost=0.0;
         double cost;
         int count;
-        for(Product product:productList){
+        for(Product product : productList){
             if(product.getId().equals(orderListProduct.getOrderId())){
                 cost=Double.parseDouble(product.getCostBySize(orderListProduct.getOrderSize()));
                 count=Integer.parseInt(orderListProduct.getOrderCount());

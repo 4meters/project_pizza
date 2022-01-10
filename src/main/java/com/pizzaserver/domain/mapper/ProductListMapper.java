@@ -1,19 +1,19 @@
 package com.pizzaserver.domain.mapper;
 
 import com.pizzaserver.domain.dto.ProductListDto;
-import com.pizzaserver.domain.object.Product;
+import com.pizzaserver.domain.entity.Product;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Converts ArrayList of Product to ProductListDto
+ * Converts ArrayList of ProductCSV to ProductListDto
  */
 @Component
-public class ProductListMapper implements Converter<ProductListDto, ArrayList<Product>> {
+public class ProductListMapper implements Converter<ProductListDto, List<Product>> {
 
     @Override
-    public ProductListDto convert(ArrayList<Product> productList) {
+    public ProductListDto convert(List<Product> productList) {
         return new ProductListDto(productList);
     }
 }

@@ -57,6 +57,14 @@ public class User implements Serializable {
         this.token = token;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public static final class Builder {
         private String login;
         private String password;
