@@ -5,16 +5,16 @@ import java.util.Map;
 
 public class ProductDto {
 
-    String id;
-    String type;
+    Integer id;
+    Integer type;
     String name;
     String description;
-    String costS;
-    String costM;
-    String costL;
-    String costU;
+    Float costS;
+    Float costM;
+    Float costL;
+    Float costU;
 
-    public ProductDto(String type, String name, String description, String costS, String costM, String costL, String costU) {
+    public ProductDto(Integer id, Integer type, String name, String description, Float costS, Float costM, Float costL, Float costU) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -24,8 +24,21 @@ public class ProductDto {
         this.costL = costL;
         this.costU = costU;
     }
+    /*public ProductDto(String id, String type, String name, String description, Float costS, Float costM, Float costL, Float costU) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.costS =costS;
+        this.costM = costM;
+        this.costL = costL;
+        this.costU = costU;
+    }*/
 
-    public String getId() {
+    public ProductDto() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -33,7 +46,7 @@ public class ProductDto {
         return name;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
@@ -41,28 +54,28 @@ public class ProductDto {
         return description;
     }
 
-    public String getCostS() {
+    public Float getCostS() {
         return costS;
     }
 
-    public String getCostM() {
+    public Float getCostM() {
         return costM;
     }
 
-    public String getCostL() {
+    public Float getCostL() {
         return costL;
     }
 
-    public String getCostU() {
+    public Float getCostU() {
         return costU;
     }
 
-    public String getCostBySize(String size){
-        Map<String, String> map = new HashMap<>();
+    public Float getCostBySize(String size){
+        Map<String, Float> map = new HashMap<>();
         map.put("S",costS);
         map.put("M",costM);
         map.put("L",costL);
         map.put("U",costU);
-        return map.get(size).replace(',','.');
+        return map.get(size);
     }
 }

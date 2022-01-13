@@ -125,7 +125,7 @@ public class PdfGeneratorApiController {
     @Test
     public InputStream convertToInputStream(String fileName)
             throws IOException {
-        File initialFile = new File(PATH, fileName + ".pdf");
+        File initialFile = new File(PATH, fileName);
         InputStream targetStream = new FileInputStream(initialFile);
         return targetStream;
     }

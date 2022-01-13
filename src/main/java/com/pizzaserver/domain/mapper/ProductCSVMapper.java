@@ -1,20 +1,30 @@
 package com.pizzaserver.domain.mapper;
 
 import com.pizzaserver.domain.entity.Product;
+import com.pizzaserver.domain.object.ProductCSV;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCSVMapper implements Converter<String, List<Product>>{
+@Component
+public class ProductCSVMapper implements Converter<List<Product>, List<ProductCSV>>{
     @Override
-    public String convert(List<Product> from) {
-        String insertQuery="";
-        String insertLine="";
-        for(Product product : from){
-            insertLine="INSERT INTO pizza.products_combined (id, type, description, costS, costM, costL, costU)\" +\n" +
-                    "            \" values ("+ product.getId()+","+ product.getType()+","+ product.getDescription()+","
-                    + product.getCostS()+","+ product.getCostM()+","+ product.getCostL()+","+ product.getCostU()+")";
+    public List<Product> convert(List<ProductCSV> from) {
+        List<Product> productList = new ArrayList<>();
+        for(ProductCSV productCSV : from){
+            Product product = Product.Builder.aProduct()
+                    .withId(Integer.parseInt(productCSV.getId()))
+                    .withName(productCSV.getName())
+                    .withType(Integer.parseInt(productCSV.getType()))
+                    .description(productCSV.getDescription())
+                    .withCostS(productCSV.getCostS())
+                    .withCostM(productCSV.getCostM())
+                    .withCostL(productCSV.getCostL())
+                    .withCostU(productCSV.getCostU())
+                    .build();
+            productList.add(product);
         }
-        insertQuery+=insertLine;
-        return insertQuery; //test - reading csv and creating query - no execution
+        return productList; //test - reading csv and creating query - no execution
     }
 }

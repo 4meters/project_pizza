@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 /**
  * User Repository interface
  */
@@ -22,6 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findOneByToken(String token);
 
+    @Modifying
+    @Transactional
     void deleteByLogin(String login);
 
 

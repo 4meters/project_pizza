@@ -20,10 +20,10 @@ public class Product implements Serializable {
 
     @Id
     @Column(name = "id")
-    private String id;
+    private Integer id;
 
     @Column(name = "type")
-    private String type;
+    private Integer type;
 
     @Column(name = "name")
     private String name;
@@ -32,16 +32,16 @@ public class Product implements Serializable {
     private String description;
 
     @Column(name = "costS")
-    private String costS;
+    private Float costS;
 
     @Column(name = "costM")
-    private String costM;
+    private Float costM;
 
     @Column(name = "costL")
-    private String costL;
+    private Float costL;
 
     @Column(name = "costU")
-    private String costU;
+    private Float costU;
 
 
     public Product(){
@@ -59,11 +59,12 @@ public class Product implements Serializable {
         costU=builder.costU;
     }
 
-    public String getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
@@ -73,40 +74,40 @@ public class Product implements Serializable {
         return description;
     }
 
-    public String getCostS() {
+    public Float getCostS() {
         return costS;
     }
 
-    public String getCostM() {
+    public Float getCostM() {
         return costM;
     }
 
-    public String getCostL() {
+    public Float getCostL() {
         return costL;
     }
 
-    public String getCostU() {
+    public Float getCostU() {
         return costU;
     }
 
-    public String getCostBySize(String size){
-        Map<String, String> map = new HashMap<>();
+    public Float getCostBySize(String size){
+        Map<String, Float> map = new HashMap<>();
         map.put("S",costS);
         map.put("M",costM);
         map.put("L",costL);
         map.put("U",costU);
-        return map.get(size).replace(',','.');
+        return map.get(size);
     }
 
     public static final class Builder {
-        private String id;
-        private String type;
+        private Integer id;
+        private Integer type;
         private String name;
         private String description;
-        private String costS;
-        private String costM;
-        private String costL;
-        private String costU;
+        private Float costS;
+        private Float costM;
+        private Float costL;
+        private Float costU;
 
         public Builder() {
         }
@@ -115,12 +116,12 @@ public class Product implements Serializable {
             return new Builder();
         }
 
-        public Builder withId(String id) {
+        public Builder withId(int id) {
             this.id = id;
             return this;
         }
 
-        public Builder withType(String type) {
+        public Builder withType(int type) {
             this.type = type;
             return this;
         }
@@ -135,22 +136,22 @@ public class Product implements Serializable {
             return this;
         }
 
-        public Builder withCostS(String costS) {
+        public Builder withCostS(Float costS) {
             this.costS = costS;
             return this;
         }
 
-        public Builder withCostM(String costM) {
+        public Builder withCostM(Float costM) {
             this.costM = costM;
             return this;
         }
 
-        public Builder withCostL(String costL) {
+        public Builder withCostL(Float costL) {
             this.costL = costL;
             return this;
         }
 
-        public Builder withCostU(String costU) {
+        public Builder withCostU(Float costU) {
             this.costU = costU;
             return this;
         }
@@ -169,7 +170,19 @@ public class Product implements Serializable {
         }
     }
 
-    /*public static final class Builder {
+    @Override
+    public String toString() {
+        return
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", costS='" + costS + '\'' +
+                ", costM='" + costM + '\'' +
+                ", costL='" + costL + '\'' +
+                ", costU='" + costU+"";
+    }
+/*public static final class Builder {
         private String id;
         private String type;
         private String description;

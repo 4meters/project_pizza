@@ -12,7 +12,7 @@ public interface ProductService {
 
     boolean editProduct(ProductDto productDto);
 
-    boolean deleteProduct(String productId);
+    boolean deleteProduct(Integer productId);
 
     ProductDto getProduct(String id);
 }

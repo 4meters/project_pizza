@@ -63,7 +63,7 @@ public class CheckoutCalculate {
                             orderListProduct.getOrderSize(),
                             totalCost,
                             orderListProduct.getOrderCount(),
-                            product.getType()
+                            product.getType().toString()
                     ));
                 }
             }
@@ -79,7 +79,7 @@ public class CheckoutCalculate {
         int count;
         for(Product product : productList){
             if(product.getId().equals(orderListProduct.getOrderId())){
-                cost=Double.parseDouble(product.getCostBySize(orderListProduct.getOrderSize()));
+                cost=product.getCostBySize(orderListProduct.getOrderSize());
                 count=Integer.parseInt(orderListProduct.getOrderCount());
                 totalCost=count*cost;
                 break;

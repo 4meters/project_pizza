@@ -2,7 +2,11 @@ package com.pizzaserver.domain.repository;
 
 import com.pizzaserver.domain.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 
 /**
  * ProductCSV Repository interface
@@ -10,7 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     
-    Product findOneById(String id);
+    @Query(value = "SELECT * FROM pizza.products_combined WHERE id=:id", nativeQuery = true)
+    Product findById(Integer id);
 
     /*@Modifying Replaced with delete+save !
     @Query(value = "UPDATE pizza.products_combined SET type = :type, description= :description, costS= :costS," +
@@ -20,7 +25,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     @Param("costS") String costS, @Param("costM") String costM, @Param("costL") String costL,
                     @Param("costU") String costU);*/
 
-    void deleteById(String id);
+    @Modifying
+    @Transactional
+    //@Query(value = "DELETE FROM pizza.products_combined WHERE id=:id", nativeQuery = true)
+    void deleteById(Integer id);
 
 
     //@Query("INSERT INTO ProductCSV p VALUES(:id,:type) m.movieId = :movieId")
@@ -31,7 +39,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                        @Param("name") String name,
                        @Param("costS") String costS, @Param("costM") String costM, @Param("costL") String costL,
                        @Param("costU") String costU);*/
-
+    //@Query(value = "INSERT INTO pizza.products_combined VALUES(:product)", nativeQuery = true)
+    //Object save(Product product);
     //TODO
     //@Modifying
     //@Query(value = ":query", nativeQuery = true)

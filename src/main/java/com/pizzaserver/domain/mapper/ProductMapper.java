@@ -5,14 +5,14 @@ import com.pizzaserver.domain.entity.Product;
 import org.springframework.stereotype.Component;
 
 /**
- * Converts ArrayList of ProductCSV to ProductListDto
+ * Converts Product to ProductDto
  */
 @Component
 public class ProductMapper implements Converter<ProductDto, Product> {
 
     @Override //TODO add builder to dto
     public ProductDto convert(Product product) {
-        ProductDto productDto =new ProductDto(
+        ProductDto productDto =new ProductDto(product.getId(),
                 product.getType(), product.getDescription(), product.getName(), product.getCostS(), product.getCostM(),
                 product.getCostL(),product.getCostU()
                 );

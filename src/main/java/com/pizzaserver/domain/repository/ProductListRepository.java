@@ -1,6 +1,8 @@
 package com.pizzaserver.domain.repository;
 
 import com.pizzaserver.domain.object.ProductCSV;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -15,13 +17,14 @@ import java.util.ArrayList;
  */
 @Repository
 public class ProductListRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductListRepository.class);
 
     public ProductListRepository() {
     }
 
     public ArrayList<ProductCSV> getProductList() {
 
-        String csvFile = "productCSVList.csv";
+        String csvFile = "productListUpdate.csv";
         BufferedReader br = null;
         String line;
         String cvsSplitBy = ";";
@@ -31,7 +34,9 @@ public class ProductListRepository {
 
             while ((line = br.readLine()) != null) {
                 String[] product = line.split(cvsSplitBy);
+                LOGGER.info(product[4]);
                 productCSVList.add(new ProductCSV(product));
+
             }
 
         } catch (IOException e) {

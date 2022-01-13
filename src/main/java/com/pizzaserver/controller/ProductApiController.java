@@ -7,6 +7,8 @@ import com.pizzaserver.helper.CSVHelper;
 import com.pizzaserver.service.ProductService;
 import com.pizzaserver.service.UserService;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -31,6 +33,7 @@ public class ProductApiController {
     private final ProductService productService;
     private final UserService userService;
     String PRODUCT_DATABASE_PATH ="productList.csv";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductApiController.class);
 
     @Autowired
     public ProductApiController(ProductService productService, UserService userService) {
@@ -114,52 +117,61 @@ public class ProductApiController {
                 try {
                     file.transferTo(Paths.get("productListUpdate.csv"));
                     message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                    //run here product list update
 
-                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
                 } catch (Exception e) {
                     message = "Could not upload the file: " + file.getOriginalFilename() + "!";
                     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
                 }
+                productService.updateDatabase(token);
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
             }
 
             message = "Please upload a csv file!";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
-        else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        }
     }
 
-    @PostMapping("/add-product/{token}")
+    @PostMapping("/add-product{token}")
     public ResponseEntity<ResponseMessage> addProduct(@RequestParam("token") String token, @RequestBody ProductDto productDto) {
         if (userService.checkTokenAdmin(token)) {
             String message = "";
             if (productService.addProduct(productDto) == true) {
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
             } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Bad request"));
             }
-        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        }
     }
 
-    @PostMapping("/edit-product/{token}")
+    @PostMapping("/edit-product{token}")
     public ResponseEntity<ResponseMessage> editProduct(@RequestParam("token") String token, @RequestBody ProductDto productDto) {
         if (userService.checkTokenAdmin(token)) {
             String message = "";
             if (productService.editProduct(productDto) == true) {
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
             } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Bad request"));
             }
-        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        } else {
+            LOGGER.info("Token problem");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        }
     }
 
-    @DeleteMapping("/edit-product/{productId}{token}")
-    public ResponseEntity<ResponseMessage> deleteProduct(@RequestParam("productId") String productId, @RequestParam("token") String token) {
+    @DeleteMapping("/delete-product{productId}{token}")
+    public ResponseEntity<ResponseMessage> deleteProduct(@RequestParam("productId") Integer productId, @RequestParam("token") String token) {
         if (userService.checkTokenAdmin(token)) {
             String message = "";
             if (productService.deleteProduct(productId) == true) {
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
             } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Bad Request"));
             }
         } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
     }

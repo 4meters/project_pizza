@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class ProductCSV {
     private String id, type, name, description;
-    private String costS, costM, costL, costU;
+    private Float costS, costM, costL, costU;
 
     public ProductCSV() {
     }
@@ -18,10 +18,14 @@ public class ProductCSV {
         this.type = product[1];       //value 0 for pizzas, 1 for drinks, 2 for set of products
         this.name = product[2];
         this.description = product[3];
-        this.costS = product[4];
-        this.costM = product[5];
-        this.costL = product[6];
-        this.costU = product[7];
+        product[4]=product[4].replace(',','.');
+        product[5]=product[5].replace(',','.');
+        product[6]=product[6].replace(',','.');
+        product[7]=product[7].replace(',','.');
+        this.costS = Float.valueOf(product[4]);
+        this.costM = Float.valueOf(product[5]);
+        this.costL = Float.valueOf(product[6]);
+        this.costU = Float.valueOf(product[7]);
     }
 
     public String getId() {
@@ -40,28 +44,28 @@ public class ProductCSV {
         return description;
     }
 
-    public String getCostS() {
+    public Float getCostS() {
         return costS;
     }
 
-    public String getCostM() {
+    public Float getCostM() {
         return costM;
     }
 
-    public String getCostL() {
+    public Float getCostL() {
         return costL;
     }
 
-    public String getCostU() {
+    public Float getCostU() {
         return costU;
     }
 
-    public String getCostBySize(String size){
-        Map<String, String> map = new HashMap<>();
+    public Float getCostBySize(String size){
+        Map<String, Float> map = new HashMap<>();
         map.put("S",costS);
         map.put("M",costM);
         map.put("L",costL);
         map.put("U",costU);
-        return map.get(size).replace(',','.');
+        return map.get(size);
     }
 }

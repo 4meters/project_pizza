@@ -14,10 +14,10 @@ public class ProductDtoMapper implements Converter<Product, ProductDto> {
                 .withType(productDto.getType())
                 .withName(productDto.getName())
                 .description(productDto.getDescription())
-                .withCostS(productDto.getId())
-                .withCostM(productDto.getId())
-                .withCostL(productDto.getId())
-                .withCostU(productDto.getId()).build();
+                .withCostS(productDto.getCostS())
+                .withCostM(productDto.getCostM())
+                .withCostL(productDto.getCostL())
+                .withCostU(productDto.getCostU()).build();
 
         return product;
     }

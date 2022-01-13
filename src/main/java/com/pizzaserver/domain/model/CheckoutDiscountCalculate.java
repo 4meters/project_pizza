@@ -57,7 +57,7 @@ public class CheckoutDiscountCalculate {
                 for (Product product : productList) {
                     if (product.getId().equals(orderListProduct.getOrderId())) {
                         switch (product.getType()) {
-                            case "0": {
+                            case 0: {
                                 if (!discountHalfPrice) {
                                     if(orderListProduct.getOrderCount().equals("1")) {
 
@@ -83,7 +83,7 @@ public class CheckoutDiscountCalculate {
                                 }
                                 break;
                             }
-                            case "1": {
+                            case 1: {
                                 if (pizzaCount == 2 && !discountFreeDrink) {
                                     discountFreeDrink = true;
                                     discountFDid = orderListProduct;//='('+orderListCurrentProduct.getOrderId()+','+orderListCurrentProduct.getOrderSize()+')';
@@ -106,15 +106,13 @@ public class CheckoutDiscountCalculate {
 
             for (Product product : productList) {
                 if (product.getId().equals(orderHalfPriceProduct.getOrderId())) {
-                    totalCostDiscount-=(Double.parseDouble(product.getCostBySize(orderHalfPriceProduct.getOrderSize())
-                            .replace(',', '.'))) * 0.5;
+                    totalCostDiscount-=product.getCostBySize(orderHalfPriceProduct.getOrderSize()) * 0.5;
                 }
             }
             if (discountFreeDrink) {
                 for (Product product : productList) {
                     if (product.getId().equals(discountFDid.getOrderId())) {
-                        totalCostDiscount-=(Double.parseDouble(product.getCostBySize(discountFDid.getOrderSize())
-                                .replace(',', '.')));
+                        totalCostDiscount-=product.getCostBySize(discountFDid.getOrderSize());
                     }
                 }
             }
