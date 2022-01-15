@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         User user=userRepository.findOneByLogin(userLoginDto.getLogin());
         //try{
             if(user!=null){
-                if(user.getPassword().equals(userLoginDto.getPassword())){//null in database password column after pass change
+                if(verifyPassword(userLoginDto.getPassword())){//null in database password column after pass change
                     String token=TokenGenerator.generateNewToken();
                     user.setToken(token);
                     userRepository.save(user);
@@ -68,6 +68,18 @@ public class UserServiceImpl implements UserService {
         //    return null;
         //}
     }
+
+    @Override
+    public boolean verifyPassword(String password) {
+        User user = userRepository.findByPassword();
+        if(user!=null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
     @Override
     public boolean checkTokenUser(String token) {

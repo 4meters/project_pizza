@@ -56,7 +56,7 @@ public class UserApiController {
             return new ResponseEntity<UserLoginSuccessDto>(userLoginSuccessDto, HttpStatus.CREATED);
         }
         else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -78,7 +78,7 @@ public class UserApiController {
             return new ResponseEntity<UserLoginSuccessDto>(HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
