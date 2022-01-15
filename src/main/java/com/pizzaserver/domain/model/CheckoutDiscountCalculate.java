@@ -55,7 +55,7 @@ public class CheckoutDiscountCalculate {
             totalCostDiscount = totalCost;
             for (OrderListProduct orderListProduct : orderListSplitted) {
                 for (Product product : productList) {
-                    if (product.getId().equals(orderListProduct.getOrderId())) {
+                    if (product.getId().toString().equals(orderListProduct.getOrderId())) {
                         switch (product.getType()) {
                             case 0: {
                                 if (!discountHalfPrice) {
@@ -105,13 +105,13 @@ public class CheckoutDiscountCalculate {
             OrderListProduct orderHalfPriceProduct = discountHPlist.get(1);
 
             for (Product product : productList) {
-                if (product.getId().equals(orderHalfPriceProduct.getOrderId())) {
+                if (product.getId().toString().equals(orderHalfPriceProduct.getOrderId())) {
                     totalCostDiscount-=product.getCostBySize(orderHalfPriceProduct.getOrderSize()) * 0.5;
                 }
             }
             if (discountFreeDrink) {
                 for (Product product : productList) {
-                    if (product.getId().equals(discountFDid.getOrderId())) {
+                    if (product.getId().toString().equals(discountFDid.getOrderId())) {
                         totalCostDiscount-=product.getCostBySize(discountFDid.getOrderSize());
                     }
                 }

@@ -54,27 +54,6 @@ public class FileServiceImpl implements FileService {
         return null;
     }
 
-    /*@Override
-    public FileData createFile(MultipartFile multipartFile, String fileName) {
-        //String fileName = userDataDto.getFirstName() + userDataDto.getLastName() + "_" + ZonedDateTime.now().toEpochSecond() + ".pdf";
-        //String fileDestination = path + fileName;
-
-        try {
-
-            Files.createDirectories(Paths.get(fileName));
-            documentComponent.createDocument(userDataDto, fileDestination);
-
-            //FileData fileData = new FileData(fileName, getFileSize(fileDestination), ZonedDateTime.now());
-            resource.saveOne(fileData, fileName);
-
-            return fileData;
-
-        } catch (IOException e) {
-            LOGGER.error("i can't save data");
-        }
-
-        return null;
-    }*/
 
     private Long getFileSize(String fileDestination) throws IOException {
         Path filePath = Paths.get(fileDestination);

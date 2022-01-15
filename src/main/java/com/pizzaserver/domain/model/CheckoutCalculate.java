@@ -5,6 +5,8 @@ import com.pizzaserver.domain.entity.Product;
 import com.pizzaserver.domain.object.OrderListProduct;
 import com.pizzaserver.domain.object.ProductOnReceipt;
 import com.pizzaserver.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,13 +19,16 @@ import java.util.concurrent.Callable;
  * <p>
  * CheckoutDto → CheckoutCalculatedDto
  */
+
+
+
 public class CheckoutCalculate {
 
     ArrayList<OrderListProduct> orderListSplitted;
     CheckoutCalculatedDto checkoutCalculatedDto;
     //ArrayList<ProductCSV> productCSVList;
     ProductService productService;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckoutCalculate.class);
 
     public CheckoutCalculate(ArrayList<OrderListProduct> orderListSplitted, ProductService productService) {
         this.orderListSplitted = orderListSplitted;
@@ -77,8 +82,10 @@ public class CheckoutCalculate {
         double totalCost=0.0;
         double cost;
         int count;
+        LOGGER.info("Funkcja calculate");
         for(Product product : productList){
-            if(product.getId().equals(orderListProduct.getOrderId())){
+            if(product.getId().toString().equals(orderListProduct.getOrderId())){
+                LOGGER.info("Znaleziono produkt");
                 cost=product.getCostBySize(orderListProduct.getOrderSize());
                 count=Integer.parseInt(orderListProduct.getOrderCount());
                 totalCost=count*cost;
