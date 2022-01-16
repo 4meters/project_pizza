@@ -121,17 +121,26 @@ public class ProductApiController {
 
                 } catch (Exception e) {
                     message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+                    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(
+                            new ResponseMessage.Builder()
+                                    .responseMessage(message)
+                                    .build());
                 }
                 productService.updateDatabase(token);
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage.Builder()
+                        .responseMessage(message)
+                        .build());
             }
 
             message = "Please upload a csv file!";
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage.Builder()
+                    .responseMessage(message)
+                    .build());
         }
         else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage.Builder()
+                    .responseMessage("Forbidden")
+                    .build());
         }
     }
 
@@ -140,12 +149,18 @@ public class ProductApiController {
         if (userService.checkTokenAdmin(token)) {
             String message = "";
             if (productService.addProduct(productDto) == true) {
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage.Builder()
+                        .responseMessage("OK")
+                        .build());
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Bad request"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage.Builder()
+                        .responseMessage("Bad request")
+                        .build());
             }
         } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage.Builder()
+                    .responseMessage("Forbidden")
+                    .build());
         }
     }
 
@@ -154,13 +169,19 @@ public class ProductApiController {
         if (userService.checkTokenAdmin(token)) {
             String message = "";
             if (productService.editProduct(productDto) == true) {
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage.Builder()
+                        .responseMessage("OK")
+                        .build());
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Bad request"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage.Builder()
+                        .responseMessage("Bad request")
+                        .build());
             }
         } else {
             LOGGER.info("Token problem");
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage.Builder()
+                    .responseMessage("Forbidden")
+                    .build());
         }
     }
 
@@ -169,11 +190,17 @@ public class ProductApiController {
         if (userService.checkTokenAdmin(token)) {
             String message = "";
             if (productService.deleteProduct(productId) == true) {
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("OK"));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage.Builder()
+                        .responseMessage("OK")
+                        .build());
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Bad Request"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage.Builder()
+                        .responseMessage("Bad request")
+                        .build());
             }
-        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Forbidden"));
+        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage.Builder()
+                .responseMessage("Forbidden")
+                .build());
     }
 
     @Test

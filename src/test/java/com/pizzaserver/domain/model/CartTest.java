@@ -34,8 +34,8 @@ public class CartTest {
             new ProductCSVMapper(), new ProductDtoMapper());
     CheckoutService checkoutService = new CheckoutServiceImpl(productService);
 
-    private String orderList;
-    private Float cost;
+    //private String orderList;
+    //private String cost;
 
     @Tag("CheckoutCalculate")
     @ParameterizedTest
@@ -43,7 +43,8 @@ public class CartTest {
             "(2,S,1) : 21.00",
     }, delimiter = ':')
     public void checkCartCostCalculation(String orderList, String cost) {
-        CheckoutCalculatedDto checkoutCalculatedDto = checkoutService.getCartTotalCost(new CheckoutDto(orderList));
+        CheckoutCalculatedDto checkoutCalculatedDto = checkoutService.getCartTotalCost(
+                new CheckoutDto.Builder().orderList(orderList).build());
 
        /* CheckoutMapper checkoutMapper = new CheckoutMapper();
         ArrayList<OrderListProduct> orderListL = checkoutMapper.convert(orderList);

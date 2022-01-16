@@ -18,6 +18,8 @@ public class ProductListMapper implements Converter<ProductListDto, List<Product
     @Override
     public ProductListDto convert(List<Product> productList) {
         //LOGGER.info(productList.get(0).toString());
-        return new ProductListDto(productList);
+        return new ProductListDto.Builder()
+                .productList(productList)
+                .build();
     }
 }

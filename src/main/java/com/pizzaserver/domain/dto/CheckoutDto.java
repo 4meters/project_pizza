@@ -13,31 +13,32 @@ public class CheckoutDto {
     public CheckoutDto(){
     }
 
-    public CheckoutDto(String orderList){
-        this.orderList=orderList;
+    private CheckoutDto(Builder builder){
+        orderList=builder.orderList;
     }
 
     public String getOrderList() {
         return orderList;
     }
 
-    public static final class CheckoutDtoBuilder {
+
+    public static final class Builder {
         private String orderList;
 
-        private CheckoutDtoBuilder() {
+        public Builder() {
         }
 
-        public static CheckoutDtoBuilder aCheckoutDto() {
-            return new CheckoutDtoBuilder();
+        public static Builder aCheckoutDto() {
+            return new Builder();
         }
 
-        public CheckoutDtoBuilder orderList(String orderList) {
+        public Builder orderList(String orderList) {
             this.orderList = orderList;
             return this;
         }
 
         public CheckoutDto build() {
-            return new CheckoutDto(orderList);
+            return new CheckoutDto(this);
         }
     }
 }

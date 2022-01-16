@@ -122,11 +122,11 @@ public class CheckoutDiscountCalculate {
         CheckoutCalculatedDto checkoutCalculatedDto;
 
         if(discountRealDeal){//discount 20%
-            checkoutCalculatedDto= new CheckoutCalculatedDto(
-                    Double.toString(totalCost),
-                    Double.toString(totalCostDiscount),
-                    "3",
-                    "");
+            checkoutCalculatedDto= new CheckoutCalculatedDto.Builder()
+                    .cost(Double.toString(totalCost))
+                    .costDiscount(Double.toString(totalCostDiscount))
+                    .discountProductList("")
+                    .discountType("3").build();
         }
 
         else if(discountHalfPrice){
@@ -138,25 +138,28 @@ public class CheckoutDiscountCalculate {
                 //add drink to discount list
                 discountIds+=",("+discountFDid.getOrderId()+','+discountFDid.getOrderSize()+')';
 
-                checkoutCalculatedDto= new CheckoutCalculatedDto(
-                        Double.toString(totalCost),
-                        Double.toString(totalCostDiscount),
-                        "2",discountIds);
+                checkoutCalculatedDto=
+                        new CheckoutCalculatedDto.Builder()
+                                .cost(Double.toString(totalCost))
+                                .costDiscount(Double.toString(totalCostDiscount))
+                                .discountProductList(discountIds)
+                                .discountType("2").build();
             }
             else{//only half price discount
-                checkoutCalculatedDto= new CheckoutCalculatedDto(
-                        Double.toString(totalCost),
-                        Double.toString(totalCostDiscount),
-                        "1",discountIds);
+                checkoutCalculatedDto= new CheckoutCalculatedDto.Builder()
+                        .cost(Double.toString(totalCost))
+                        .costDiscount(Double.toString(totalCostDiscount))
+                        .discountProductList(discountIds)
+                        .discountType("1").build();
             }
         }
 
         else{//no discount
-            checkoutCalculatedDto= new CheckoutCalculatedDto(
-                    Double.toString(totalCost),
-                    Double.toString(totalCostDiscount),
-                    "0",
-                    "");
+            checkoutCalculatedDto= new CheckoutCalculatedDto.Builder()
+                    .cost(Double.toString(totalCost))
+                    .costDiscount(Double.toString(totalCostDiscount))
+                    .discountProductList("")
+                    .discountType("0").build();
         }
 
         return checkoutCalculatedDto;

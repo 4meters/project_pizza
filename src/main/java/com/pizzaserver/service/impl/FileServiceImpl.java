@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
             Files.createDirectories(Paths.get(path));
             documentComponent.createDocument(userDataDto, fileDestination);
 
-            FileData fileData = new FileData(fileName, getFileSize(fileDestination), ZonedDateTime.now());
+            FileData fileData = new FileData.Builder().fileName(fileName).creationDate(ZonedDateTime.now()).size(getFileSize(fileDestination)).build();
             resource.saveOne(fileData, path);
 
             return fileData;
