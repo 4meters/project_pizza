@@ -29,6 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void deleteByLogin(String login);
 
 
-    @Query(value= "SELECT * FROM pizza.users WHERE password=crypt('122testhash', password)", nativeQuery = true)
-    User findByPassword();
+    @Query(value= "SELECT * FROM pizza.users WHERE password=crypt(:password, password)", nativeQuery = true)
+    User findByPassword(@Param("password") String password);
 }
