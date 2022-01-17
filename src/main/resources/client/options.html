@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+        <title>Opcje</title>
+		<link type="text/css" rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/auth.js"></script>
+    <script defer src="./js/logout.js"></script>
+    <script defer src="./js/options.js"></script>
+    </head>
+    <body>
+
+
+		 <div id="container">
+			<div id="menu">
+
+			<h1>Project Pizza</h1>
+
+			<a href="home.html"><button class="home">Strona startowa</button></a>
+			<a href="menu.html"><button class="menu">Menu</button></a>
+			<a href="order.html"><button class="order">Zamówienie</button></a>
+			<a href="info.html"><button class="info">Informacje</button></a>
+      <a href="login.html"><button class="login">Login</button></a>
+      <a href="home.html"><button class="logout">Logout</button></a>
+      <a href="options.html"><button class="options">Options</button></a>
+			 </div>
+
+
+			<div id="content"  >
+
+			<h2>Opcje</h2>
+      <form  action="home.html"class="ChangePassword">
+          <p>Zmiana hasła</p>
+          <div class="input-group">
+              <input type="password"  class="input" id="oldPassword" placeholder="Stare hasło">
+              <span class="error-message"></span>
+          </div>
+          <div class="input-group">
+              <input type="password" id="newPassword" class="input" placeholder="Nowe hasło">
+              <span class="error-message"></span>
+          </div>
+
+          <button class="button" type="submit">Zmień</button>
+      </form>
+      <br>
+      <p>Usuń konto</p>
+      <input type="password" id="deletePassword" class="input" placeholder="Hasło"><br>
+      <span hidden id="error">Błędne hasło</span><br>
+      <button type="button" name="button" id="deleteButton">Usuń</button>
+			</div>
+
+			<div id="topR" >
+
+
+			</div>
+
+			<div id="footerhome">
+
+			<h3>@Copyright Pizza-2k19 Team</h3>
+
+			</div>
+
+
+
+
+
+
+
+		 </div>
+
+
+
+	</body>
+</html>

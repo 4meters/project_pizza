@@ -1,5 +1,6 @@
 package com.pizzaserver.controller;
 
+import com.pizzaserver.domain.dto.UserChangePasswordDto;
 import com.pizzaserver.domain.dto.UserLoginDto;
 import com.pizzaserver.domain.dto.UserLoginSuccessDto;
 import com.pizzaserver.domain.dto.UserRegisterDto;
@@ -29,12 +30,28 @@ public class UserApiController {
         this.userService = userService;
     }
 
+    /**
+     * Api for registering new user
+     * @param userRegisterDto login, password
+     * @return true if user is created or false if not
+     */
     @PostMapping(value = "/user/create")
     public ResponseEntity<Boolean> createUser(@RequestBody UserRegisterDto userRegisterDto){
         boolean isCreated=userService.createUser(userRegisterDto);
-        return new ResponseEntity<Boolean>(isCreated, HttpStatus.CREATED);
+        if(isCreated){
+            return new ResponseEntity<Boolean>(isCreated, HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<Boolean>(isCreated, HttpStatus.BAD_REQUEST);
+        }
 
     }
+
+    /**
+     * Api for user log in
+     * @param userLoginDto login, password
+     * @return token or bad request if login or password is incorrect or user does not exists
+     */
     @PostMapping(value = "/user/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginDto userLoginDto){
         UserLoginSuccessDto userLoginSuccessDto=userService.loginUser(userLoginDto);
@@ -42,7 +59,29 @@ public class UserApiController {
             return new ResponseEntity<UserLoginSuccessDto>(userLoginSuccessDto, HttpStatus.CREATED);
         }
         else {
-            return new ResponseEntity<UserLoginSuccessDto>((UserLoginSuccessDto) null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/user/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody UserLoginDto userLoginDto){
+        boolean isDeleted = userService.deleteUser(userLoginDto);
+        if(isDeleted){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/user/change-password")
+    public ResponseEntity<?> deleteUser(@RequestBody UserChangePasswordDto userChangePasswordDto){
+        boolean isPasswordChanged=userService.changePassword(userChangePasswordDto);
+        if(isPasswordChanged){
+            return new ResponseEntity<UserLoginSuccessDto>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -51,7 +90,7 @@ public class UserApiController {
     public ResponseEntity<UserListDto> getList(){
         List<User> u=userService.readAll();
 
-        UserListDto u2= new UserListDto(u);
+        UserListDto u2= new UserListDto.Builder().userList(u).build();
         return new ResponseEntity<UserListDto>(u2, HttpStatus.OK);
     }*/
 

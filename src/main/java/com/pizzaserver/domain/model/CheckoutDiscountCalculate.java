@@ -1,16 +1,32 @@
 package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
+import com.pizzaserver.domain.entity.Product;
 import com.pizzaserver.domain.object.OrderListProduct;
-import com.pizzaserver.domain.object.Product;
-import com.pizzaserver.domain.repository.ProductListRepository;
+import com.pizzaserver.service.ProductService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class called by CheckoutCalculate, it's used to calculate discounts of order and final cost after discounts
+ *
+ * <p>discountHalfPrice - true if order has 2 pizzas (discount type 1)</p>
+ * <p>discountFreeDrink - true if order has 2 pizzas and drink - results in free drink (combines with discountHalfPrice)</p>
+ * <p>discountRealDeal - true if order is over 100zł - results in order cheaper by 20% of its price</p>
+ * <p>pizzaCount - pizzas count</p>
+ * <p>discountHPlist - list of products with HalfPrice discount</p>
+ * <p>OrderListProduct - discountFDid</p>
+ * <p>totalCost - order total cost before discount</p>
+ * <p>totalCostDiscount - order total cost after discount</p>
+ *
+ *
+*/
 
 public class CheckoutDiscountCalculate {
 
-    private boolean discountHalfPrice=false; //discount type 1 (when 2 same pizzas in cart, second cheaper by 50%)
-    private boolean discountFreeDrink=false; //2 (discountHP & discountFD) (drink is free, when 2 same pizzas in cart)
+    private boolean discountHalfPrice=false; //discount type 1 (when 2 pizzas in cart, second cheaper by 50%)
+    private boolean discountFreeDrink=false; //2 (discountHP & discountFD) (drink is free, when 2 pizzas in cart)
     private boolean discountRealDeal=false; //3        //order over 100zł is cheaper by 20% of its price
     private int pizzaCount=0; //pizzas count
     private ArrayList<OrderListProduct> discountHPlist;
@@ -18,15 +34,15 @@ public class CheckoutDiscountCalculate {
     private double totalCost;
     private double totalCostDiscount=0;
 
-    private ArrayList<Product> productList;
+    private List<Product> productList;
     private ArrayList<OrderListProduct> orderListSplitted;
 
-    public CheckoutDiscountCalculate(ArrayList<OrderListProduct> orderListSplitted, double totalCost) {
+    public CheckoutDiscountCalculate(ArrayList<OrderListProduct> orderListSplitted, double totalCost, ProductService productService) {
         this.totalCost=totalCost;
         this.orderListSplitted=orderListSplitted;
 
         discountHPlist=new ArrayList<>();
-        productList=new ProductListRepository().getProductList();
+        productList = productService.getProductList().getProductList();
         discountCheck();
         discountCount();
     }
@@ -39,9 +55,9 @@ public class CheckoutDiscountCalculate {
             totalCostDiscount = totalCost;
             for (OrderListProduct orderListProduct : orderListSplitted) {
                 for (Product product : productList) {
-                    if (product.getId().equals(orderListProduct.getOrderId())) {
+                    if (product.getId().toString().equals(orderListProduct.getOrderId())) {
                         switch (product.getType()) {
-                            case "0": {
+                            case 0: {
                                 if (!discountHalfPrice) {
                                     if(orderListProduct.getOrderCount().equals("1")) {
 
@@ -67,7 +83,7 @@ public class CheckoutDiscountCalculate {
                                 }
                                 break;
                             }
-                            case "1": {
+                            case 1: {
                                 if (pizzaCount == 2 && !discountFreeDrink) {
                                     discountFreeDrink = true;
                                     discountFDid = orderListProduct;//='('+orderListCurrentProduct.getOrderId()+','+orderListCurrentProduct.getOrderSize()+')';
@@ -89,16 +105,14 @@ public class CheckoutDiscountCalculate {
             OrderListProduct orderHalfPriceProduct = discountHPlist.get(1);
 
             for (Product product : productList) {
-                if (product.getId().equals(orderHalfPriceProduct.getOrderId())) {
-                    totalCostDiscount-=(Double.parseDouble(product.getCostBySize(orderHalfPriceProduct.getOrderSize())
-                            .replace(',', '.'))) * 0.5;
+                if (product.getId().toString().equals(orderHalfPriceProduct.getOrderId())) {
+                    totalCostDiscount-=product.getCostBySize(orderHalfPriceProduct.getOrderSize()) * 0.5;
                 }
             }
             if (discountFreeDrink) {
                 for (Product product : productList) {
-                    if (product.getId().equals(discountFDid.getOrderId())) {
-                        totalCostDiscount-=(Double.parseDouble(product.getCostBySize(discountFDid.getOrderSize())
-                                .replace(',', '.')));
+                    if (product.getId().toString().equals(discountFDid.getOrderId())) {
+                        totalCostDiscount-=product.getCostBySize(discountFDid.getOrderSize());
                     }
                 }
             }
@@ -108,11 +122,11 @@ public class CheckoutDiscountCalculate {
         CheckoutCalculatedDto checkoutCalculatedDto;
 
         if(discountRealDeal){//discount 20%
-            checkoutCalculatedDto= new CheckoutCalculatedDto(
-                    Double.toString(totalCost),
-                    Double.toString(totalCostDiscount),
-                    "3",
-                    "");
+            checkoutCalculatedDto= new CheckoutCalculatedDto.Builder()
+                    .cost(Double.toString(totalCost))
+                    .costDiscount(Double.toString(totalCostDiscount))
+                    .discountProductList("")
+                    .discountType("3").build();
         }
 
         else if(discountHalfPrice){
@@ -124,25 +138,28 @@ public class CheckoutDiscountCalculate {
                 //add drink to discount list
                 discountIds+=",("+discountFDid.getOrderId()+','+discountFDid.getOrderSize()+')';
 
-                checkoutCalculatedDto= new CheckoutCalculatedDto(
-                        Double.toString(totalCost),
-                        Double.toString(totalCostDiscount),
-                        "2",discountIds);
+                checkoutCalculatedDto=
+                        new CheckoutCalculatedDto.Builder()
+                                .cost(Double.toString(totalCost))
+                                .costDiscount(Double.toString(totalCostDiscount))
+                                .discountProductList(discountIds)
+                                .discountType("2").build();
             }
             else{//only half price discount
-                checkoutCalculatedDto= new CheckoutCalculatedDto(
-                        Double.toString(totalCost),
-                        Double.toString(totalCostDiscount),
-                        "1",discountIds);
+                checkoutCalculatedDto= new CheckoutCalculatedDto.Builder()
+                        .cost(Double.toString(totalCost))
+                        .costDiscount(Double.toString(totalCostDiscount))
+                        .discountProductList(discountIds)
+                        .discountType("1").build();
             }
         }
 
         else{//no discount
-            checkoutCalculatedDto= new CheckoutCalculatedDto(
-                    Double.toString(totalCost),
-                    Double.toString(totalCostDiscount),
-                    "0",
-                    "");
+            checkoutCalculatedDto= new CheckoutCalculatedDto.Builder()
+                    .cost(Double.toString(totalCost))
+                    .costDiscount(Double.toString(totalCostDiscount))
+                    .discountProductList("")
+                    .discountType("0").build();
         }
 
         return checkoutCalculatedDto;

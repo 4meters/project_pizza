@@ -19,8 +19,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class used to store list of saved files
+ */
 @Repository
 public class ResourceDAO implements Resource {
+
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceDAO.class);
 
@@ -59,7 +64,11 @@ public class ResourceDAO implements Resource {
             LOGGER.error("i can't parse date");
         }
 
-        return new FileData(fileName, size, creationDate);
+        return new FileData.Builder()
+                .fileName(fileName)
+                .creationDate(creationDate)
+                .size(size)
+                .build();
     }
 
     @Override

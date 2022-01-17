@@ -8,9 +8,11 @@ import com.pizzaserver.domain.dto.UserDataDto;
 import com.pizzaserver.domain.model.CheckoutCalculate;
 import com.pizzaserver.domain.object.ProductOnReceipt;
 import com.pizzaserver.service.CheckoutService;
+import com.pizzaserver.service.ProductService;
 import com.pizzaserver.service.impl.CheckoutServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
@@ -18,12 +20,20 @@ import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Class used for generating receipt in pdf file
+ */
 @Component
 public class DocumentComponentImpl implements DocumentComponent {
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentComponentImpl.class);
     DecimalFormat decimalFormat=new DecimalFormat("0.00");
     private CheckoutService checkoutService;
+
+    @Autowired
+    private ProductService productService;
+
 
     @Override
     public void createDocument(UserDataDto userDataDto, String fileDestination) {
@@ -31,8 +41,8 @@ public class DocumentComponentImpl implements DocumentComponent {
 
 
 
-            checkoutService=new CheckoutServiceImpl();
-            CheckoutCalculate checkoutCalculate=new CheckoutCalculate(checkoutService.checkoutOrderListDecode(userDataDto.getOrderList()));
+            checkoutService=new CheckoutServiceImpl(productService);
+            CheckoutCalculate checkoutCalculate=new CheckoutCalculate(checkoutService.checkoutOrderListDecode(userDataDto.getOrderList()), productService);
             CheckoutCalculatedDto checkoutCalculatedDto = checkoutCalculate.getCheckoutCalculatedDto();
             ArrayList<ProductOnReceipt> productOnReceiptList = checkoutCalculate.getCheckoutProducts();
 

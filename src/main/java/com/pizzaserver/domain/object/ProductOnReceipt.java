@@ -1,5 +1,8 @@
 package com.pizzaserver.domain.object;
 
+/**
+ * Stores information about product for pdf generating
+ */
 public class ProductOnReceipt {
     private String name;
     private String size;

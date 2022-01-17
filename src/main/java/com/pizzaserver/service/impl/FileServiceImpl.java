@@ -18,6 +18,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * Service used for saving pdf to file
+ */
 @Service
 public class FileServiceImpl implements FileService {
 
@@ -39,7 +42,7 @@ public class FileServiceImpl implements FileService {
             Files.createDirectories(Paths.get(path));
             documentComponent.createDocument(userDataDto, fileDestination);
 
-            FileData fileData = new FileData(fileName, getFileSize(fileDestination), ZonedDateTime.now());
+            FileData fileData = new FileData.Builder().fileName(fileName).creationDate(ZonedDateTime.now()).size(getFileSize(fileDestination)).build();
             resource.saveOne(fileData, path);
 
             return fileData;
@@ -51,27 +54,6 @@ public class FileServiceImpl implements FileService {
         return null;
     }
 
-    /*@Override
-    public FileData createFile(MultipartFile multipartFile, String fileName) {
-        //String fileName = userDataDto.getFirstName() + userDataDto.getLastName() + "_" + ZonedDateTime.now().toEpochSecond() + ".pdf";
-        //String fileDestination = path + fileName;
-
-        try {
-
-            Files.createDirectories(Paths.get(fileName));
-            documentComponent.createDocument(userDataDto, fileDestination);
-
-            //FileData fileData = new FileData(fileName, getFileSize(fileDestination), ZonedDateTime.now());
-            resource.saveOne(fileData, fileName);
-
-            return fileData;
-
-        } catch (IOException e) {
-            LOGGER.error("i can't save data");
-        }
-
-        return null;
-    }*/
 
     private Long getFileSize(String fileDestination) throws IOException {
         Path filePath = Paths.get(fileDestination);
