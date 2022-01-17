@@ -87,7 +87,7 @@ public class UserApiController {
     public ResponseEntity<UserListDto> getList(){
         List<User> u=userService.readAll();
 
-        UserListDto u2= new UserListDto(u);
+        UserListDto u2= new UserListDto.Builder().userList(u).build();
         return new ResponseEntity<UserListDto>(u2, HttpStatus.OK);
     }
 

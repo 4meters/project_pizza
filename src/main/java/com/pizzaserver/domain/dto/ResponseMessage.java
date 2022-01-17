@@ -8,7 +8,7 @@ public class ResponseMessage {
     String responseMessage;
 
     private ResponseMessage(Builder builder) {
-        this.responseMessage = responseMessage;
+        this.responseMessage = builder.responseMessage;
     }
 
     public String getResponseMessage() {

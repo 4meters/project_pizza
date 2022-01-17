@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
                     String token=TokenGenerator.generateNewToken();
                     user.setToken(token);
                     userRepository.save(user);
-                    return new UserLoginSuccessDto(token);
+                    return new UserLoginSuccessDto.Builder().token(token).build();
                 }
             }
             return null;
