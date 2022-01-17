@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  * Service for UserApiController
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
         User user=userRepository.findOneByLogin(userLoginDto.getLogin());
         //try{
             if(user!=null){
-                if(verifyPassword(userLoginDto.getPassword())){//null in database password column after pass change
+                if(verifyPassword(userLoginDto.getPassword())){
                     String token=TokenGenerator.generateNewToken();
                     user.setToken(token);
                     userRepository.save(user);
@@ -63,10 +62,6 @@ public class UserServiceImpl implements UserService {
                 }
             }
             return null;
-        //}
-        //catch(Exception e){
-        //    return null;
-        //}
     }
 
     @Override
@@ -118,14 +113,6 @@ public class UserServiceImpl implements UserService {
             }
         }
         return false;
-        /*
-        try{
-            userRepository.deleteByLogin(userLoginDto.getLogin());
-            return true;
-        }
-        catch (Exception e) {
-            return false;
-        }*/
     }
 
     @Override
@@ -145,9 +132,9 @@ public class UserServiceImpl implements UserService {
     }
 
     //for testing
-    @Override
+    /*@Override
     public List<User> readAll() {
         List<User> users=userRepository.findAll();
         return users;
-    }
+    }*/
 }

@@ -1,12 +1,9 @@
 package com.pizzaserver.service;
 
+import com.pizzaserver.domain.dto.UserChangePasswordDto;
 import com.pizzaserver.domain.dto.UserLoginDto;
 import com.pizzaserver.domain.dto.UserLoginSuccessDto;
-import com.pizzaserver.domain.dto.UserChangePasswordDto;
 import com.pizzaserver.domain.dto.UserRegisterDto;
-import com.pizzaserver.domain.entity.User;
-
-import java.util.List;
 
 public interface UserService {
 
@@ -23,6 +20,6 @@ public interface UserService {
     boolean changePassword(UserChangePasswordDto userChangePasswordDto);
 
     //for testing
-    List<User> readAll();
+    //List<User> readAll();
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper implements Converter<ProductDto, Product> {
 
-    @Override //TODO add builder to dto
+    @Override
     public ProductDto convert(Product product) {
         ProductDto productDto =new ProductDto.Builder().id(product.getId())
                 .name(product.getName())

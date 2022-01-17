@@ -182,36 +182,5 @@ public class Product implements Serializable {
                 ", costL='" + costL + '\'' +
                 ", costU='" + costU+"";
     }
-/*public static final class Builder {
-        private String id;
-        private String type;
-        private String description;
-        private String costS;
-        private String costM;
-        private String costL;
-        private String costU;
-
-        public Builder() {
-        }
-
-        public Builder login(String login) {
-            this.login = login;
-            return this;
-        }
-
-        public Builder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder token(String token) {
-            this.token = token;
-            return this;
-        }
-
-        public ProductCSV build() {
-            return new ProductCSV(this);
-        }
-    }*/
 
 }

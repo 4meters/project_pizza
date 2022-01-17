@@ -2,23 +2,33 @@ package com.pizzaserver.domain.model;
 
 import com.pizzaserver.domain.dto.CheckoutCalculatedDto;
 import com.pizzaserver.domain.dto.CheckoutDto;
+import com.pizzaserver.domain.mapper.ProductCSVMapper;
+import com.pizzaserver.domain.mapper.ProductDtoMapper;
+import com.pizzaserver.domain.mapper.ProductListMapper;
+import com.pizzaserver.domain.mapper.ProductMapper;
+import com.pizzaserver.domain.repository.ProductListRepository;
 import com.pizzaserver.domain.repository.ProductRepository;
 import com.pizzaserver.domain.repository.UserRepository;
 import com.pizzaserver.service.CheckoutService;
 import com.pizzaserver.service.ProductService;
 import com.pizzaserver.service.impl.CheckoutServiceImpl;
+import com.pizzaserver.service.impl.ProductServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Slf4j
 public class CartTest {
     //private final CheckoutCalculate checkoutCalculate = new CheckoutCalculate();
     @Mock
@@ -27,14 +37,22 @@ public class CartTest {
     @Mock
     ProductRepository productRepository;
 
-    @InjectMocks
-    ProductService productService;/* = new ProductServiceImpl(productRepository,
-            new ProductListMapper(),userRepository, new ProductListRepository(), new ProductMapper(),
-            new ProductCSVMapper(), new ProductDtoMapper());*/
-    CheckoutService checkoutService = new CheckoutServiceImpl(productService);
+
+    ProductService productService;
+
+    CheckoutService checkoutService;
 
     //private String orderList;
     //private String cost;
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+        ProductService productService = new ProductServiceImpl(productRepository,
+                new ProductListMapper(),userRepository, new ProductListRepository(), new ProductMapper(),
+                new ProductCSVMapper(), new ProductDtoMapper());
+        CheckoutService checkoutService = new CheckoutServiceImpl(productService);
+    }
 
     @Tag("CheckoutCalculate")
     @ParameterizedTest
