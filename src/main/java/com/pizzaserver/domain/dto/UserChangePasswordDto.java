@@ -5,6 +5,12 @@ public class UserChangePasswordDto {//change on swaggerhub
     private String password;
     private String newPassword;
 
+    public UserChangePasswordDto(String login, String password, String newPassword) {
+        this.login = login;
+        this.password = password;
+        this.newPassword = newPassword;
+    }
+
     public UserChangePasswordDto(Builder builder) {
         this.login = builder.login;
         this.password = builder.password;

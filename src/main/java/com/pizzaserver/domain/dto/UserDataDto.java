@@ -39,6 +39,13 @@ public class UserDataDto implements Serializable {
         return token;
     }
 
+    public UserDataDto(String firstName, String lastName, String orderList, String token) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.orderList = orderList;
+        this.token = token;
+    }
+
     public UserDataDto(Builder builder) {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;

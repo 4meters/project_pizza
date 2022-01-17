@@ -14,6 +14,13 @@ public class CheckoutCalculatedDto {
     public CheckoutCalculatedDto(){
     }
 
+    public CheckoutCalculatedDto(String cost, String costDiscount, String discountType, String discountProductList) {
+        this.cost = cost;
+        this.costDiscount = costDiscount;
+        this.discountType = discountType;
+        this.discountProductList = discountProductList;
+    }
+
     public CheckoutCalculatedDto(Builder builder){
         this.cost=builder.cost;
         this.costDiscount=builder.costDiscount;

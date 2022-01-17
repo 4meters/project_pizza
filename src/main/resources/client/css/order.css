@@ -1,0 +1,45 @@
+#contentOrder
+{
+	float:left;
+	text-align: left;
+	width:400px;
+	font-size:medium;
+	font-family: cursive;
+	color:white;
+
+}
+#price
+{
+	padding-top: 50px;
+	float:left;
+	text-align: center;
+	width: 200px;
+	font-size:medium;
+	font-family: cursive;
+
+
+}
+#cart
+{
+	width:600px;
+	float:left;
+	text-align:left;
+	font-size:medium;
+	font-family: cursive;
+	color:white;
+}
+#pdf
+{
+	display: none;
+	onclick: myFunction;
+}
+#person
+{
+	display:none;
+	onclick: myFunction;
+}
+#account
+{
+	display: none;
+	onclick: myFunction;
+}

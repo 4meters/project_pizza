@@ -7,6 +7,10 @@ public class ResponseMessage {
 
     String responseMessage;
 
+    public ResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
+    }
+
     private ResponseMessage(Builder builder) {
         this.responseMessage = builder.responseMessage;
     }

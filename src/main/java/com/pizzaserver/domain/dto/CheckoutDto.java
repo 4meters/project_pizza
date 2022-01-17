@@ -13,6 +13,10 @@ public class CheckoutDto {
     public CheckoutDto(){
     }
 
+    public CheckoutDto(String orderList) {
+        this.orderList = orderList;
+    }
+
     private CheckoutDto(Builder builder){
         orderList=builder.orderList;
     }

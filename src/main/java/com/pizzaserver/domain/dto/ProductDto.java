@@ -14,6 +14,17 @@ public class ProductDto {
     Float costL;
     Float costU;
 
+    public ProductDto(Integer id, Integer type, String name, String description, Float costS, Float costM, Float costL, Float costU) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.costS = costS;
+        this.costM = costM;
+        this.costL = costL;
+        this.costU = costU;
+    }
+    
     private ProductDto(Builder builder) {
         this.id = builder.id;
         this.type = builder.type;
@@ -24,6 +35,9 @@ public class ProductDto {
         this.costL = builder.costL;
         this.costU = builder.costU;
     }
+
+
+
     /*public ProductDto(String id, String type, String name, String description, Float costS, Float costM, Float costL, Float costU) {
         this.id = id;
         this.type = type;

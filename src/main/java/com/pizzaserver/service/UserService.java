@@ -10,7 +10,7 @@ public interface UserService {
     boolean createUser(UserRegisterDto userRegisterDto);
     UserLoginSuccessDto loginUser(UserLoginDto userLoginDto);
 
-    boolean verifyPassword(String password);
+    boolean verifyPassword(String login, String password);
 
     boolean checkTokenUser(String token);
     boolean checkTokenAdmin(String token);

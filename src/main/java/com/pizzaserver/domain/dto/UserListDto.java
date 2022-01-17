@@ -13,6 +13,10 @@ public class UserListDto {
 
     private List<User> userList;
 
+    public UserListDto(List<User> userList) {
+        this.userList = userList;
+    }
+
     public UserListDto(Builder builder) {
         this.userList = builder.userList;
     }

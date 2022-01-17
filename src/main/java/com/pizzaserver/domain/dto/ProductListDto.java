@@ -11,6 +11,10 @@ public class ProductListDto {
 
     private List<Product> productList;
 
+    public ProductListDto(List<Product> productList) {
+        this.productList = productList;
+    }
+
     private ProductListDto(Builder builder) {
         this.productList = builder.productList;
     }

@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         User user=userRepository.findOneByLogin(userLoginDto.getLogin());
         //try{
             if(user!=null){
-                if(verifyPassword(userLoginDto.getPassword())){
+                if(verifyPassword(userLoginDto.getLogin(), userLoginDto.getPassword())){
                     String token=TokenGenerator.generateNewToken();
                     user.setToken(token);
                     userRepository.save(user);
@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean verifyPassword(String password) {
-        User user = userRepository.findByPassword(password);
+    public boolean verifyPassword(String login, String password) {
+        User user = userRepository.verifyUser(login, password);
         if(user!=null){
             return true;
         }
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(UserLoginDto userLoginDto) {
         User user=userRepository.findOneByLogin(userLoginDto.getLogin());
         if(user!=null){
-            if(user.getPassword().equals(userLoginDto.getPassword())){
+            if(verifyPassword(userLoginDto.getLogin(), userLoginDto.getPassword())){
                 userRepository.deleteByLogin(userLoginDto.getLogin());
                 return true;
             }
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
     public boolean changePassword(UserChangePasswordDto userChangePasswordDto) {
         User user=userRepository.findOneByLogin(userChangePasswordDto.getLogin());
         if(user!=null){
-            if(user.getPassword().equals(userChangePasswordDto.getPassword())){
+            if(verifyPassword(userChangePasswordDto.getLogin(), userChangePasswordDto.getPassword())){
                 userRepository.deleteByLogin(userChangePasswordDto.getLogin());
                 userRepository.flush();
                 user.setPassword(userChangePasswordDto.getNewPassword());

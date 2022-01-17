@@ -16,6 +16,7 @@ public class ErrorDto {
     }
 
 
+
     public static final class Builder {
         String errorMessage;
 

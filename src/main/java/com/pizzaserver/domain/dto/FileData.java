@@ -17,6 +17,12 @@ public class FileData {
         this.creationDate = builder.creationDate;
     }
 
+    public FileData(String fileName, Long size, ZonedDateTime creationDate) {
+        this.fileName = fileName;
+        this.size = size;
+        this.creationDate = creationDate;
+    }
+
     public String getFileName() {
         return fileName;
     }

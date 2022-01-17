@@ -7,6 +7,10 @@ public class UserLoginSuccessDto {
 
     private String token;
 
+    public UserLoginSuccessDto(String token) {
+        this.token = token;
+    }
+
     public UserLoginSuccessDto(Builder builder) {
         this.token = builder.token;
     }

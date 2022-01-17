@@ -10,6 +10,11 @@ public class UserLoginDto {
     private String login;
     private String password;
 
+    public UserLoginDto(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public UserLoginDto(Builder builder) {
         this.login = builder.login;
         this.password = builder.password;

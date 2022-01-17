@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/register.css">
+    <script defer src="./js/register.js"></script>
+
+</head>
+<body class="register">
+    <div class="container">
+        <h2 class="text-center">Register</h2>
+        <br>
+        <form  action="home.html"class="registerForm">
+            <div class="input-group">
+                <label for="username" class="label">Username</label>
+                <input type="text" id="username" class="input">
+                <span class="error-message"></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <label for="password" class="label">Password</label>
+                <input type="password" id="password" class="input">
+                <span class="error-message"></span>
+            </div>
+            <div class="input-group">
+                <label for="password2" class="label">Repeat password</label>
+                <input type="password" id="password2" class="input">
+                <span class="error-message"></span>
+            </div>
+            <br>
+            <button class="button" type="submit">Register</button>
+        </form>
+        <a href="login.html"><button class="login">Login</button></a>
+        <a href="login.html"><button class="forgot-password">Forgot password</button></a>
+    </div>
+</body>
+</html>
