@@ -9,7 +9,7 @@
 <p>-JUnit</p>
 
 <b>Klient:</b>
-<p>-HTML,</p> <p>CSS,</p> <p>JS,</p> <p>JQuery</p>
+<p>-HTML, CSS, JS, JQuery</p>
 
 <b>Uruchomienie programu:</b>
 <p>
