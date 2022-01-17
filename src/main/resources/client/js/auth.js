@@ -9,9 +9,7 @@ class Auth {
 	validateAuth(auth) {
 		if (auth == null) {
 			document.getElementsByClassName("login")[0].style.display = "inline";
-			localStorage.removeItem("auth");
-			localStorage.removeItem("admin");
-			localStorage.removeItem("login");
+
 
 		} else {
           document.getElementsByClassName("logout")[0].style.display = "inline";

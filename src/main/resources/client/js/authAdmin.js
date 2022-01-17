@@ -21,3 +21,4 @@ class AuthAdmin {
 
 }
 console.log("check");
+const authAdmin = new AuthAdmin();
