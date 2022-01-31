@@ -6,7 +6,6 @@ import com.pizzaserver.domain.dto.FileData;
 import com.pizzaserver.domain.dto.UserDataDto;
 import com.pizzaserver.service.FileService;
 import com.pizzaserver.service.UserService;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
@@ -122,7 +121,7 @@ public class PdfGeneratorApiController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
     }
-    @Test
+
     public InputStream convertToInputStream(String fileName)
             throws IOException {
         File initialFile = new File(PATH, fileName);

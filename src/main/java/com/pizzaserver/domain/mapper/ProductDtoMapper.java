@@ -10,7 +10,7 @@ public class ProductDtoMapper implements Converter<Product, ProductDto> {
     @Override
     public Product convert(ProductDto productDto) {
         Product product = new Product.Builder()
-                .withId(productDto.getId())
+                .withId(-1)
                 .withType(productDto.getType())
                 .withName(productDto.getName())
                 .description(productDto.getDescription())

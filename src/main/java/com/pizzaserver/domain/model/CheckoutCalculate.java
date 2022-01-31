@@ -32,7 +32,9 @@ public class CheckoutCalculate {
 
     public CheckoutCalculate(ArrayList<OrderListProduct> orderListSplitted, ProductService productService) {
         this.orderListSplitted = orderListSplitted;
+        System.out.println(orderListSplitted);
         this.productService = productService;
+        System.out.println(this.productService);
         //this.productCSVList = new ProductListRepository().getProductList();
     }
 
@@ -79,11 +81,13 @@ public class CheckoutCalculate {
 
     private String calculateSingleProduct(OrderListProduct orderListProduct){
         List<Product> productList = productService.getProductList().getProductList();
+        System.out.println(productList);
         double totalCost=0.0;
         double cost;
         int count;
         LOGGER.info("Funkcja calculate");
         for(Product product : productList){
+            System.out.println(product);
             if(product.getId().toString().equals(orderListProduct.getOrderId())){
                 LOGGER.info("Znaleziono produkt");
                 cost=product.getCostBySize(orderListProduct.getOrderSize());

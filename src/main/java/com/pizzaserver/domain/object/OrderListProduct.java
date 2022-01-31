@@ -32,4 +32,12 @@ public class OrderListProduct {
         return orderCount;
     }
 
+    @Override
+    public String toString() {
+        return "OrderListProduct{" +
+                "orderId='" + orderId + '\'' +
+                ", orderSize='" + orderSize + '\'' +
+                ", orderCount='" + orderCount + '\'' +
+                '}';
+    }
 }

@@ -12,8 +12,6 @@ import com.pizzaserver.domain.repository.ProductListRepository;
 import com.pizzaserver.domain.repository.ProductRepository;
 import com.pizzaserver.domain.repository.UserRepository;
 import com.pizzaserver.service.ProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,15 +22,15 @@ import java.util.List;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final ProductListRepository productListRepository;
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
-    private final Converter<ProductListDto, List<com.pizzaserver.domain.entity.Product>> productListMapper;
-    private final Converter<ProductDto, Product> productMapper;
-    private final Converter<List<Product>, List<ProductCSV>> productCSVMapper;
-    private final Converter<Product, ProductDto> productDtoMapper;
+    private ProductListRepository productListRepository;
+    private ProductRepository productRepository;
+    private UserRepository userRepository;
+    private Converter<ProductListDto, List<com.pizzaserver.domain.entity.Product>> productListMapper;
+    private Converter<ProductDto, Product> productMapper;
+    private Converter<List<Product>, List<ProductCSV>> productCSVMapper;
+    private Converter<Product, ProductDto> productDtoMapper;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     //private final Converter<String, List<Product>> productCSVMapper;
 
@@ -53,7 +51,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductListDto getProductList() {
-        LOGGER.info(productRepository.toString());
+        //LOGGER.info(productRepository.toString());
+        System.out.println(productRepository);
         return productListMapper.convert(productRepository.findAll());
     }
 
@@ -79,9 +78,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean addProduct(ProductDto productDto) {
         Product product = productDtoMapper.convert(productDto);
-        //try {
-            productRepository.save(product);
-            return true;
+
+        Integer maxId= Integer.parseInt(productRepository.findMaxId());
+        product.setId(maxId+1);
+        productRepository.save(product);
+        return true;
         //}
         //catch (Exception e){
          //   return false;
@@ -98,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
             return true;
         }
         catch (Exception e){
-            LOGGER.info(e.getMessage());
+            //LOGGER.info(e.getMessage());
             return false;
         }
     }

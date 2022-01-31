@@ -1,4 +1,4 @@
-package com.pizzaserver.domain.model;
+package com.pizzaserver.service.impl;
 
 import com.pizzaserver.domain.dto.ProductDto;
 import com.pizzaserver.domain.mapper.ProductCSVMapper;
@@ -9,10 +9,8 @@ import com.pizzaserver.domain.repository.ProductListRepository;
 import com.pizzaserver.domain.repository.ProductRepository;
 import com.pizzaserver.domain.repository.UserRepository;
 import com.pizzaserver.service.ProductService;
-import com.pizzaserver.service.impl.ProductServiceImpl;
 import javafx.application.Application;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,15 +20,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
         webEnvironment =  SpringBootTest.WebEnvironment.MOCK,
         classes = Application.class)
 @AutoConfigureMockMvc
-public class EditProductTest {
-    //private final CheckoutCalculate checkoutCalculate = new CheckoutCalculate();
+class ProductServiceImplTest {
+
     @Mock
     UserRepository userRepository;
 
@@ -48,16 +44,18 @@ public class EditProductTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Tag("CheckoutCalculate")
+
+
     @Test
-    public void editProduct() {
-        ProductDto productToEdit = new ProductDto.Builder().id(77).name("TEST").description("Test desc").type(0)
-                .costS((float) 33.00).costM((float)44).costL((float)55).costU(null).build();
-        productService.editProduct(productToEdit);
-
-        ProductDto productInDb = productService.getProduct("77");
-        assertEquals(productToEdit, productInDb);
-
+    void addProduct() {
+        productService.addProduct(new ProductDto.Builder()
+                .id(321)
+                .type(2)
+                .name("Test")
+                .description("")
+                .costS((float) 18.9)
+                .costM((float) 28.9)
+                .costL((float) 38.9)
+                .costU(null).build());
     }
-
 }

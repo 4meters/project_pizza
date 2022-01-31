@@ -19,14 +19,14 @@ class AddNewProduct {
 
     let newProduct = new XMLHttpRequest();
     console.log(this.token);
-    console.log(document.getElementsByName('id')[0].value);
+    //console.log(document.getElementsByName('id')[0].value);
     newProduct.open('POST', 'http://127.0.0.1:8080/api/product/add-product?token=' + this.token  );
     newProduct.setRequestHeader("Content-Type", "application/json");
     newProduct.onload = function (){
 
     };
     let toSend = {
-      id:document.getElementsByName('id')[0].value,
+      //id:document.getElementsByName('id')[0].value,
       type:document.getElementsByName('type')[0].value,
       name:document.getElementsByName('name')[0].value,
       description:document.getElementsByName('description')[0].value,

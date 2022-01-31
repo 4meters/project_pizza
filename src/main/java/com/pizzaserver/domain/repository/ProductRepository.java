@@ -22,4 +22,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Transactional
     void deleteById(Integer id);
 
+
+
+    @Query(value = "SELECT max(id) FROM pizza.products;", nativeQuery = true)
+    String findMaxId();
+
 }

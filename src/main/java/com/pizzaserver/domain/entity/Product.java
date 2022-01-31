@@ -90,6 +90,10 @@ public class Product implements Serializable {
         return costU;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Float getCostBySize(String size){
         Map<String, Float> map = new HashMap<>();
         map.put("S",costS);

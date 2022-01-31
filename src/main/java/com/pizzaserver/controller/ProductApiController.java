@@ -6,7 +6,6 @@ import com.pizzaserver.domain.dto.ResponseMessage;
 import com.pizzaserver.helper.CSVHelper;
 import com.pizzaserver.service.ProductService;
 import com.pizzaserver.service.UserService;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -203,7 +202,7 @@ public class ProductApiController {
                 .build());
     }
 
-    @Test
+    //@Test
     public InputStream convertToInputStream(String fileName)
             throws IOException {
         File initialFile = new File(fileName);

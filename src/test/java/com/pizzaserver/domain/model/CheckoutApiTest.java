@@ -36,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureMockMvc
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
-public class CartTest {
+public class CheckoutApiTest {
+
     //private final CheckoutCalculate checkoutCalculate = new CheckoutCalculate();
     @Mock
     UserRepository userRepository;
@@ -46,8 +47,8 @@ public class CartTest {
 
     @InjectMocks
     ProductService productService = new ProductServiceImpl(productRepository,
-                new ProductListMapper(),userRepository, new ProductListRepository(), new ProductMapper(),
-                new ProductCSVMapper(), new ProductDtoMapper());;
+            new ProductListMapper(),userRepository, new ProductListRepository(), new ProductMapper(),
+            new ProductCSVMapper(), new ProductDtoMapper());;
 
     @InjectMocks
     CheckoutService checkoutService = new CheckoutServiceImpl(productService);
@@ -77,15 +78,14 @@ public class CartTest {
         CheckoutCalculatedDto checkoutCalculatedDto = checkoutService.getCartTotalCost(
                 checkoutDto);
         //Mockito.when(productRepository.findAll()).thenReturn(getProducts());
-       /* CheckoutMapper checkoutMapper = new CheckoutMapper();
-        ArrayList<OrderListProduct> orderListL = checkoutMapper.convert(orderList);
-        CheckoutCalculate checkoutCalculate = new CheckoutCalculate(orderListL, productService);
-        assertEquals(Float.valueOf(cost), Float.valueOf(checkoutCalculate.getCheckoutCalculatedDto().getCost()));*/
+   /* CheckoutMapper checkoutMapper = new CheckoutMapper();
+    ArrayList<OrderListProduct> orderListL = checkoutMapper.convert(orderList);
+    CheckoutCalculate checkoutCalculate = new CheckoutCalculate(orderListL, productService);
+    assertEquals(Float.valueOf(cost), Float.valueOf(checkoutCalculate.getCheckoutCalculatedDto().getCost()));*/
         System.out.println(checkoutCalculatedDto.getCost());
         System.out.println("  87  "+productService.getProduct("4"));
         assertEquals(Float.valueOf(cost), Float.valueOf(checkoutCalculatedDto.getCost()));
         //assertEquals(21.00, 21.00);
 
     }
-
 }
