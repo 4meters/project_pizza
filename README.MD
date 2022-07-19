@@ -1,17 +1,34 @@
-<b>Wykorzystane narzędzia:</b>
+# Project pizza (server and client app)
+App for ordering pizza, created using Spring Boot, HTML and JS.
 
-<b>Baza danych:</b>
-<p>-PostgreSQL</p>
+## Main features:
+- product list
+- cart
+- generating receipt and download
+- import and export database by CSV file
+- manage product list
+## Api documentation
+https://app.swaggerhub.com/apis/chuck321/Pizzav3/1.0.0-oas3
+## Technologies used for implementing project
+### Database:
+- PostgreSQL
 
-<b>Serwer:</b>
-<p>-Java</p>
-<p>-Spring</p>
-<p>-JUnit</p>
+### Server:
+- Java
+- Maven
+- Spring Boot
 
-<b>Klient:</b>
-<p>-HTML, CSS, JS, JQuery</p>
+### Client:
+- HTML
+- CSS
+- JS
+- JQuery
 
-<b>Uruchomienie programu:</b>
-<p>
-Należy zaimportować projekt do IntellijIDEA, stworzyć konfigurację uruchamiania Maven, w command line wpisać: spring-boot:run, zapisać konfigurację.
-Wybrać konfigurację i uruchomić.</p>
+## How to run:
+Import project in your IDE, for example IntellijIdea.
+
+Than add Maven running configuration and in command line box enter: spring-boot:run.
+
+Select newly added configuration and run project.
+
+Client app is located in src\main\resources\client
